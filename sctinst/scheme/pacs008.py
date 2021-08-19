@@ -26,7 +26,7 @@ def validate(data):
         print(e)
         return {
             'isValid':False,
-            'error_message': e
+            'message': e
         }
 
 

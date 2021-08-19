@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.03"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.03"
+    elementFormDefault="qualified">
+  <xs:element name="Document" type="Document_EPC122-16_SCT_INST_IB_2019_V1.0_Update"/>
+  <xs:simpleType name="BICIdentifier">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">BICIdentifier</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 "Banking - Banking telecommunication messages - Business identifier code (BIC)".</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="BranchAndFinancialInstitutionIdentification4">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Branch And Financial Institution Identification 4</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Set of elements used to uniquely and unambiguously identify a financial institution or a branch of a financial institution.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="FinInstnId" type="FinancialInstitutionIdentification7">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Financial Institution Identification</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Unique and unambiguous identification of a financial institution, as assigned under an internationally recognised or proprietary identification scheme.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BranchAndFinancialInstitutionIdentification4_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="BranchAndFinancialInstitutionIdentification4">
+        <xs:sequence>
+          <xs:element name="FinInstnId" type="FinancialInstitutionIdentification7_EPC122-16_SCT_INST_IB_2019_V1.0_Update"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CategoryPurpose1Choice">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Category Purpose 1Choice</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">
+Specifies the high level purpose of the instruction based on a set of pre-defined categories.
+Usage: This is used by the initiating party to provide information concerning the processing of the payment. It is likely to trigger special processing by any of the agents involved in the payment chain.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Cd" type="ExternalCategoryPurpose1Code">
+          <xs:annotation>
+            <xs:documentation xml:lang="EN" source="Name">Code</xs:documentation>
+            <xs:documentation xml:lang="EN" source="Definition">Category purpose, as published in an external category purpose code list.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Prtry" type="Max35Text">
+          <xs:annotation>
+            <xs:documentation xml:lang="EN" source="Name">Proprietary</xs:documentation>
+            <xs:documentation xml:lang="EN" source="Definition">Category purpose, in a proprietary form.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Document">
+    <xs:sequence>
+      <xs:element name="FIToFIPmtStsRpt" type="FIToFIPaymentStatusReportV03">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">FITo FIPayment Status Report V03</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Document_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="Document">
+        <xs:sequence>
+          <xs:element name="FIToFIPmtStsRpt" type="FIToFIPaymentStatusReportV03_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ExternalCategoryPurpose1Code">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">External Category Purpose 1Code</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Specifies the category purpose, as published in an external category purpose code list.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExternalLocalInstrument1Code">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">External Local Instrument 1Code</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">
+Specifies the external local instrument code in the format of character string with a maximum length of 35 characters.
+The list of valid codes is an external code list published separately.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExternalServiceLevel1Code">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">External Service Level 1Code</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">
+Specifies the external service level code in the format of character string with a maximum length of 4 characters.
+The list of valid codes is an external code list published separately.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExternalServiceLevel1Code_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:restriction base="ExternalServiceLevel1Code">
+      <xs:enumeration value="SEPA">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">SingleEuroPaymentsArea</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">
+Payment must be executed following the Single Euro Payments Area scheme.
+
+Status: New
+Status Date: April 2009
+Introduced Date: April 2009
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:minLength value="1"/>
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="FinancialInstitutionIdentification7">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Financial Institution Identification 7</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Set of elements used to identify a financial institution.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="BIC" type="BICIdentifier" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">BIC</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 "Banking - Banking telecommunication messages - Business identifier code (BIC)".</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FinancialInstitutionIdentification7_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="FinancialInstitutionIdentification7">
+        <xs:sequence>
+          <xs:element name="BIC" type="BICIdentifier"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FIToFIPaymentStatusReportV03">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">FITo FIPayment Status Report V03</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">The PaymentInitiationStatusReport message is sent by an instructed agent to the payment initiator. It is used to inform this party about the positive or negative status of an instruction (either single, group or file). It is also used to report on a pending instruction.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="GrpHdr" type="GroupHeader37">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Group Header</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Set of characteristics shared by all individual transactions included in the status report message.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgnlGrpInfAndSts" type="OriginalGroupInformation20">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Original Group Information And Status</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Original group information concerning the group of transactions, to which the status report message refers to.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TxInfAndSts" type="PaymentTransactionInformation26" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Transaction Information And Status</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Information concerning the original transactions, to which the status report message refers.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FIToFIPaymentStatusReportV03_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="FIToFIPaymentStatusReportV03">
+        <xs:sequence>
+          <xs:element name="GrpHdr" type="GroupHeader37_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrgnlGrpInfAndSts" type="OriginalGroupInformation20_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TxInfAndSts" type="PaymentTransactionInformation26_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+              <xs:documentation source="Usage Rule">Only once occurrence is allowed.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GroupHeader37">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Group Header 37</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Set of characteristics shared by all individual transactions included in the message.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="MsgId" type="Max35Text">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Message Identification</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">
+Point to point reference, as assigned by the instructing party, and sent to the next party in the chain to unambiguously identify the message.
+Usage: The instructing party has to make sure that MessageIdentification is unique per instructed party for a pre-agreed period.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CreDtTm" type="ISODateTime">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Creation Date Time</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Date and time at which the message was created.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InstgAgt" type="BranchAndFinancialInstitutionIdentification4" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Instructing Agent</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">
+Agent that instructs the next party in the chain to carry out the (set of) instruction(s).
+
+Usage: The instructing agent is the party sending the status message and not the party that sent the original instruction that is being reported on.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InstdAgt" type="BranchAndFinancialInstitutionIdentification4" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Instructed Agent</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">
+Agent that is instructed by the previous party in the chain to carry out the (set of) instruction(s).
+
+Usage: The instructed agent is the party receiving the status message and not the party that received the original instruction that is being reported on.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GroupHeader37_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="GroupHeader37">
+        <xs:sequence>
+          <xs:element name="MsgId" type="Max35Text">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CreDtTm" type="ISODateTime">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InstgAgt" type="BranchAndFinancialInstitutionIdentification4_EPC122-16_SCT_INST_IB_2019_V1.0_Update" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Only BIC is allowed.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="InstdAgt" type="BranchAndFinancialInstitutionIdentification4_EPC122-16_SCT_INST_IB_2019_V1.0_Update" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Only BIC is allowed.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ISODateTime">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">ISODate Time</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">
+A particular point in the progression of time defined by a mandatory date and a mandatory time component, expressed in either UTC time format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML Schema Part 2: Datatypes Second Edition - W3C Recommendation 28 October 2004" which is aligned with ISO 8601.
+Note on the time format:
+1) beginning / end of calendar day
+00:00:00 = the beginning of a calendar day
+24:00:00 = the end of a calendar day
+2) fractions of second in time format
+Decimal fractions of seconds may be included. In this case, the involved parties shall agree on the maximum number of digits that are allowed.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:complexType name="LocalInstrument2Choice">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Local Instrument 2Choice</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Set of elements that further identifies the type of local instruments being requested by the initiating party.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Cd" type="ExternalLocalInstrument1Code">
+          <xs:annotation>
+            <xs:documentation xml:lang="EN" source="Name">Code</xs:documentation>
+            <xs:documentation xml:lang="EN" source="Definition">Specifies the local instrument, as published in an external local instrument code list.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Max35Text">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Max 35Text</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Specifies a character string with a maximum length of 35 characters.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="OriginalGroupInformation20">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Original Group Information 20</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Set of elements used to provide information on the original group, to which the message refers.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="OrgnlMsgId" type="Max35Text">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Original Message Identification</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Point to point reference, as assigned by the original instructing party, to unambiguously identify the original message.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgnlMsgNmId" type="Max35Text">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Original Message Name Identification</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Specifies the original message name identifier to which the message refers.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="GrpSts" type="TransactionGroupStatus3Code" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Group Status</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Specifies the status of a group of transactions.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OriginalGroupInformation20_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="OriginalGroupInformation20">
+        <xs:sequence>
+          <xs:element name="OrgnlMsgId" type="Max35Text">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrgnlMsgNmId" type="Max35Text">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Only pacs.008.001.02 is allowed.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GrpSts" type="TransactionGroupStatus3Code">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+              <xs:documentation source="Usage Rule">Only ‘ACCP’ is allowed.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OriginalTransactionReference13">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Original Transaction Reference 13</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Set of key elements used to refer the original transaction.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PmtTpInf" type="PaymentTypeInformation22" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Payment Type Information</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Set of elements used to further specify the type of transaction.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DbtrAgt" type="BranchAndFinancialInstitutionIdentification4" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Debtor Agent</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Financial institution servicing an account for the debtor.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OriginalTransactionReference13_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="OriginalTransactionReference13">
+        <xs:sequence>
+          <xs:element name="PmtTpInf" type="PaymentTypeInformation22_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+              <xs:documentation xml:lang="EN" source="Rulebook">AT-45 The category purpose of the SCT Inst Instruction.</xs:documentation>
+              <xs:documentation xml:lang="EN" source="Rulebook">AT-40 The identification code of the SCT Inst Scheme.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DbtrAgt" type="BranchAndFinancialInstitutionIdentification4_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Rulebook">AT-06 BIC code of the Originator Bank.</xs:documentation>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PaymentTransactionInformation26">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Payment Transaction Information 26</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Set of elements used to provide information on the original transactions, to which the status report message refers.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StsId" type="Max35Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Status Identification</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">
+Unique identification, as assigned by an instructing party for an instructed party, to unambiguously identify the reported status.
+Usage: The instructing party is the party sending the status message and not the party that sent the original instruction that is being reported on.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgnlInstrId" type="Max35Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Original Instruction Identification</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Unique identification, as assigned by the original instructing party for the original instructed party, to unambiguously identify the original instruction.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgnlEndToEndId" type="Max35Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Original End To End Identification</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Unique identification, as assigned by the original initiating party, to unambiguously identify the original transaction.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgnlTxId" type="Max35Text" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Original Transaction Identification</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Unique identification, as assigned by the original first instructing agent, to unambiguously identify the transaction.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AccptncDtTm" type="ISODateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Acceptance Date Time</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Point in time when the payment order from the initiating party meets the processing conditions of the account servicing agent. This means that the account servicing agent has received the payment order and has applied checks such as authorisation, availability of funds.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OrgnlTxRef" type="OriginalTransactionReference13" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Original Transaction Reference</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Set of key elements used to identify the original transaction that is being referred to.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentTransactionInformation26_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="PaymentTransactionInformation26">
+        <xs:sequence>
+          <xs:element name="StsId" type="Max35Text">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+              <xs:documentation source="Rulebook">AT-51 The Beneficiary Bank’s reference of the SCT Inst Transaction.</xs:documentation>
+              <xs:documentation xml:lang="EN" source="Rulebook">This ID must be forwarded to the Originator Bank and optionally to the Originator (and therefore it is not a point-to-point reference).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrgnlInstrId" type="Max35Text" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Mandatory if provided in the original instruction.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrgnlEndToEndId" type="Max35Text">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+              <xs:documentation source="Rulebook">AT-41 The Originator’s reference of the SCT Inst Instruction.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrgnlTxId" type="Max35Text">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+              <xs:documentation source="Rulebook">AT-43 The Originator Bank’s reference number of the SCT Inst Transaction message.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccptncDtTm" type="ISODateTime">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation xml:lang="EN" source="Rulebook">AT- 50 Timestamp of the SCT Inst Transaction.</xs:documentation>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrgnlTxRef" type="OriginalTransactionReference13_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+            <xs:annotation>
+              <xs:documentation source="Yellow Field"/>
+              <xs:documentation source="Usage Rule">Mandatory</xs:documentation>
+              <xs:documentation source="Usage Rule">The message elements under ‘Original Transaction Reference’ must be populated with the same value as the message elements of the original instruction.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PaymentTypeInformation22">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Payment Type Information 22</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Set of elements used to provide further details of the type of payment.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="SvcLvl" type="ServiceLevel8Choice" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Service Level</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Agreement under which or rules under which the transaction should be processed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LclInstrm" type="LocalInstrument2Choice" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Local Instrument</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">
+User community specific instrument.
+
+Usage: This element is used to specify a local instrument, local clearing option and/or further qualify the service or service level.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CtgyPurp" type="CategoryPurpose1Choice" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">Category Purpose</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">
+Specifies the high level purpose of the instruction based on a set of pre-defined categories.
+Usage: This is used by the initiating party to provide information concerning the processing of the payment. It is likely to trigger special processing by any of the agents involved in the payment chain.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaymentTypeInformation22_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="PaymentTypeInformation22">
+        <xs:sequence>
+          <xs:element name="SvcLvl" type="ServiceLevel8Choice_EPC122-16_SCT_INST_IB_2019_V1.0_Update"/>
+          <xs:element name="LclInstrm" type="LocalInstrument2Choice"/>
+          <xs:element name="CtgyPurp" type="CategoryPurpose1Choice" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ServiceLevel8Choice">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Service Level 8Choice</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Specifies the service level of the transaction.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Cd" type="ExternalServiceLevel1Code">
+          <xs:annotation>
+            <xs:documentation xml:lang="EN" source="Name">Code</xs:documentation>
+            <xs:documentation xml:lang="EN" source="Definition">Specifies a pre-agreed service or level of service between the parties, as published in an external service level code list.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServiceLevel8Choice_EPC122-16_SCT_INST_IB_2019_V1.0_Update">
+    <xs:complexContent>
+      <xs:restriction base="ServiceLevel8Choice">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element name="Cd" type="ExternalServiceLevel1Code_EPC122-16_SCT_INST_IB_2019_V1.0_Update"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="TransactionGroupStatus3Code">
+    <xs:annotation>
+      <xs:documentation xml:lang="EN" source="Name">Transaction Group Status 3Code</xs:documentation>
+      <xs:documentation xml:lang="EN" source="Definition">Specifies the status of a group of payment instructions.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACCP">
+        <xs:annotation>
+          <xs:documentation xml:lang="EN" source="Name">AcceptedCustomerProfile</xs:documentation>
+          <xs:documentation xml:lang="EN" source="Definition">Preceding check of technical validation was successful. Customer profile check was also successful.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
