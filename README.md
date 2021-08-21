@@ -1,5 +1,5 @@
 <div align="left">
-  <img style="width: 40%" src="https://www.europeanpaymentscouncil.eu/sites/default/files/inline-images/EPC_Infographics_092019.jpg">
+  <img style="width: 40%" src="./SCTInst.jpg">
 </div>
 
 # SCTInst: powerful Python Sepa toolkit
