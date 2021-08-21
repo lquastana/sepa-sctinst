@@ -11,11 +11,15 @@ message_type_not_found = 'Message type not found.'
 message_empty = 'Document is empty'
 
 def init_default_message():
-    message_identification='msg_id',
-    initiating_party_name='Your name',
+    message_identification='msg_id'
+    initiating_party_name='Your name'
     debtor = IbanData('BOUSFRPPXXX','FR7630001007941234567890185','My company')
     sct_message = SCTInst(message_identification,initiating_party_name,debtor)
+    return sct_message
     
+
+    
+def add_default_trasaction(sct_message):
     transation = Transaction(
         name = 'Name of the creditor',
         bic = 'BOUSFRPPXXX',
@@ -27,7 +31,6 @@ def init_default_message():
         requested_date = date(2002, 12, 4),
         )
     sct_message.add_transaction(transation)
-    return sct_message
     
     
 
@@ -54,27 +57,42 @@ def test_pacs008_xsd(filename,message_type,is_valid,error_msg_present,expected_m
         
         
 def test_pacs008_init():
-    message_identification='msg_id',
-    initiating_party_name='Your name',
+    message_identification='msg_id'
+    initiating_party_name='Your name'
     debtor = IbanData('BOUSFRPPXXX','FR7630001007941234567890185','My company')
-    sct_message = SCTInst(message_identification,initiating_party_name,debtor)
-    
-    assert sct_message.message_identification == message_identification
-    assert sct_message.initiating_party_name == initiating_party_name
-    assert sct_message.debtor == debtor
-    
-def test_pacs008_add_transaction():
-    message_identification='msg_id',
-    initiating_party_name='Your name',
-    debtor = IbanData('BOUSFRPPXXX','FR7630001007941234567890185','My company')
-
     sct_message = init_default_message()
+    
+    
     assert sct_message.message_identification == message_identification
     assert sct_message.initiating_party_name == initiating_party_name
     assert sct_message.debtor.bic == debtor.bic
+    
+def test_pacs008_add_transaction():
+    sct_message = init_default_message()
+    add_default_trasaction(sct_message)
     assert len(sct_message.transactions) == 1
     
-def test_pacs008_to_xml():
+def test_pacs008_one_transaction_to_xml():
     sct_message = init_default_message()
+    add_default_trasaction(sct_message)
     xml_message = sct_message.to_xml()
-    print(xml_message)
+    response = schema_validation.validate(xml_message,'SCTInst')
+
+    assert response['isValid'] == True
+    
+def test_pacs008_no_transaction_to_xml():
+    sct_message = init_default_message()
+    
+    with pytest.raises(ValueError):
+        sct_message.to_xml()
+
+    
+def test_pacs008_two_transactions_to_xml():
+    sct_message = init_default_message()
+    add_default_trasaction(sct_message)
+    add_default_trasaction(sct_message)
+    xml_message = sct_message.to_xml()
+    response = schema_validation.validate(xml_message,'SCTInst')
+
+    assert response['isValid'] == False
+    
