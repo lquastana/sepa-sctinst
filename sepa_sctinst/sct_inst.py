@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime,date
 import functools
+import random
+from faker import Faker
 
 SERVICE_LEVEL_CODE = 'SEPA'
 LOCAL_INSTRUMENT = 'INST'
@@ -67,30 +69,43 @@ class SCTInst:
     
     group_header:GroupHeader
     originator:Participant
-    transactions:list = [Transaction]
+    transaction:Transaction
 
-    def __init__(self,group_header:GroupHeader,originator:Participant,transactions:list=None):
+    def __init__(self,group_header:GroupHeader,originator:Participant,transaction:Transaction):
         """SCTInst constructor
 
         Args:
             group_header (GroupHeader): Group Header
             originator (Participant): Originator informations
-            transactions (list, optional): Transaction informations
+            transaction (Transaction): Transaction informations
         """
         self.group_header = group_header
         self.originator = originator
-        if transactions is not None:
-            self.transactions = transactions
-        else:
-            self.transactions = []
+        self.transaction = transaction
 
-    def add_transaction(self,transaction:Transaction):
-        """ Add transaction
+    @staticmethod
+    def random():
+        """Generate random SCTInst object
 
-        Args:
-            transaction (Transaction): Transaction
+        Returns:
+            SCTInst: SCTInst object with random value
         """
-        self.transactions.append(transaction)
+        fake = Faker()
+        
+        group_header = GroupHeader(fake.bothify(text='MSGID?????????'),fake.date_time(),fake.date_object(),'CLRG')
+        originator = Participant(fake.swift(),fake.iban(),fake.name())
+        
+        beneficiary = Participant(fake.swift(),fake.iban(),fake.name())
+        transation = Transaction(beneficiary,
+                                 str(round(random.uniform(1,2), 2)),
+                                 fake.bothify(text='ENDTOEND?????????'),
+                                 fake.bothify(text='TXID?????????'),
+                                 fake.date_time(),
+                                 fake.bothify(text='REF?????????'),
+                                 fake.bothify(text='REMINF?????????'))
+    
+        return SCTInst(group_header,originator,transation)
+        
     
 
     def to_xml(self):
@@ -100,44 +115,40 @@ class SCTInst:
             str: XML dcoument
         """
         
-        if len(self.transactions) == 0:
-            raise ValueError('You need a minimum of 1 transaction')
-        
         root = ET.Element("Document")
         root.set('xmlns',"urn:iso:std:iso:20022:tech:xsd:pacs.008.001.02")
         root_fito = ET.SubElement(root, "FIToFICstmrCdtTrf")
-        self.xml_header(root_fito)
         
-        for transaction in self.transactions:
-            self.xml_transaction(root_fito, transaction)
+        self.xml_header(root_fito)
+        self.xml_transaction(root_fito)
 
         ET.ElementTree(root)
  
         return ET.tostring(root,encoding='utf-8',xml_declaration=True).decode('utf-8')
 
-    def xml_transaction(self, root_fito, transaction:Transaction):
+    def xml_transaction(self, root_fito):
         cdt_tx = ET.SubElement(root_fito, "CdtTrfTxInf")
         cdt_tx_pmt = ET.SubElement(cdt_tx, "PmtId")
             
         cdt_tx_pmt_e2e = ET.SubElement(cdt_tx_pmt, "EndToEndId")
-        cdt_tx_pmt_e2e.text = transaction.end_to_end_id
+        cdt_tx_pmt_e2e.text = self.transaction.end_to_end_id
             
         cdt_tx_pmt_id = ET.SubElement(cdt_tx_pmt, "TxId")
-        cdt_tx_pmt_id.text = transaction.tx_id
+        cdt_tx_pmt_id.text = self.transaction.tx_id
             
         cdt_tx_pmt_amt = ET.SubElement(cdt_tx, "IntrBkSttlmAmt")
         cdt_tx_pmt_amt.set('Ccy',CURRENCY)
-        cdt_tx_pmt_amt.text = str(transaction.amount)
+        cdt_tx_pmt_amt.text = str(self.transaction.amount)
         
             
         cdt_tx_pmt_acceptance_datetime = ET.SubElement(cdt_tx, "AccptncDtTm")
-        cdt_tx_pmt_acceptance_datetime.text = transaction.acceptance_datetime.isoformat()
+        cdt_tx_pmt_acceptance_datetime.text = self.transaction.acceptance_datetime.isoformat()
             
         cdt_tx_pmt_chrbr = ET.SubElement(cdt_tx, "ChrgBr")
         cdt_tx_pmt_chrbr.text = CHARGE_BEARER
         
-        self.xml_party_inf(cdt_tx,transaction,'Dbtr')
-        self.xml_party_inf(cdt_tx,transaction,'Cdtr')
+        self.xml_party_inf(cdt_tx,self.transaction,'Dbtr')
+        self.xml_party_inf(cdt_tx,self.transaction,'Cdtr')
         
         
     def xml_party_inf(self, transaction_node:ET.SubElement,transaction:Transaction, stakeholder:str):
@@ -187,16 +198,11 @@ class SCTInst:
         header_cre_dt_tm.text = self.group_header.creation_datetime.isoformat()
         
         header_nb_txs = ET.SubElement(grp_header, "NbOfTxs")
-        header_nb_txs.text = str(len(self.transactions))
+        header_nb_txs.text = '1'
         
         header_tt_amount = ET.SubElement(grp_header, "TtlIntrBkSttlmAmt")
         header_tt_amount.set('Ccy','EUR')
-        if len(self.transactions)>1 :
-            header_tt_amount.text = str(functools.reduce(lambda a, b: a.amount+b.amount, self.transactions))
-        elif len(self.transactions)== 1 :
-            header_tt_amount.text = str(self.transactions[0].amount)
-        else:
-            header_tt_amount.text = '0'
+        header_tt_amount.text = str(self.transaction.amount)
         
         header_sttlm_dt = ET.SubElement(grp_header, "IntrBkSttlmDt")
         header_sttlm_dt.text = self.group_header.interbank_sttlmt_date.isoformat()

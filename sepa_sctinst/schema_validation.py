@@ -1,5 +1,5 @@
 
-from sctinst import PaymentConfiguration
+from sepa_sctinst import PaymentConfiguration
 import lxml
 from lxml import etree
 import io
@@ -15,7 +15,7 @@ class SchemaValidation:
             payment_conf (PaymentConfiguration): Payment configuration
 
         Returns:
-            [type]: [description]
+            dict: Dict with isValid and error_messages if isValid = False
         """
 
         with open(payment_conf.xsd_filepath) as f:

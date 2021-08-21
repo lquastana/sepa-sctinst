@@ -2,34 +2,36 @@
   <img style="width: 40%" src="./SCTInst.jpg">
 </div>
 
-# SCTInst: powerful Python Sepa toolkit
-[![codecov](https://codecov.io/gh/lquastana/sctinst/branch/main/graph/badge.svg?token=15NMHC642N)](https://codecov.io/gh/lquastana/sctinst)
+# SEPA SCTInst: A powerful Python SEPA toolkit for SCTInst Payments
+[![codecov](https://codecov.io/gh/lquastana/sctinst/branch/main/graph/badge.svg?token=15NMHC642N)](https://codecov.io/gh/lquastana/sepa-sctinst)
 
 ## What is it?
 
-**SCTInst** is a python package that provides some features to manage SCTInst payment.
+**SEPA SCTInst** is a python package that provides some features to manage SCTInst payments.
 
 ## Main Features
 
 Here are just a few of the things that sctinst does well:
 - XSD validation
-- PACS008 Scheme implementation
+- SCTInst Scheme implementation
+- Generate random payments
 
 ## Where to get it
 
 The source code is currently hosted on GitHub at:
-https://github.com/lquastana/sctinst.git
+https://github.com/lquastana/sepa-sctinst.git
 
 Binary installers for the latest released version are available at the [Python
-Package Index (PyPI)](https://pypi.org/project/sctinst)
+Package Index (PyPI)](https://pypi.org/project/sepa-sctinst)
 
 ```sh
-pip install pandas
+pip install sepa-sctinst
 ```
 
 ## Dependencies
 
 - [lxml](https://lxml.de/) - lxml is the most feature-rich and easy-to-use library for processing XML and HTML in the Python language.
+- [Faker](https://faker.readthedocs.io/en/master/) - Faker is a Python package that generates fake data for you.
 
 ## Installation from sources
 
@@ -46,7 +48,7 @@ The official documentation is hosted on xxx.org: https://xxx.pydata.org/xxx-docs
 
 
 <!-- 
-pytest --cov=sctinst
-pdoc --html --output-dir ./doc ./sctinst/
+pytest --cov=sepa_sctinst
+pdoc --html --output-dir ./doc ./sepa_sctinst/ --force
 
 -->
