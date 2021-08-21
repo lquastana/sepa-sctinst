@@ -3,6 +3,7 @@
 </div>
 
 # SCTInst: powerful Python Sepa toolkit
+[![codecov](https://codecov.io/gh/lquastana/sctinst/branch/main/graph/badge.svg?token=15NMHC642N)](https://codecov.io/gh/lquastana/sctinst)
 
 ## What is it?
 
