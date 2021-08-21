@@ -1,5 +1,3 @@
-import pytest
-
 from datetime import date,datetime
 from sepa_sctinst.schema_validation import SchemaValidation
 from sepa_sctinst.sct_inst import SCTInst,GroupHeader,Transaction,Participant
