@@ -1,36 +1,24 @@
 
+from sctinst import PaymentConfiguration
 import lxml
 from lxml import etree
 import io
 
-PAYMENT_TYPES = {
-    'SCTInst':'sctinst/xsd/pacs.008.001.02.xsd',
-    'Negative':'sctinst/xsd/pacs.002.001.03_Negative.xsd'
-}
+
 
 class SchemaValidation:
-    def __init__(self, payment_types=PAYMENT_TYPES):
-        self.payments_types = payment_types
+    def validate(self,data:str,payment_conf:PaymentConfiguration):
+        """ XSD Validation for SCTInst payment
 
+        Args:
+            data (str): XML Data
+            payment_conf (PaymentConfiguration): Payment configuration
 
-    """
-        XSD validation for 008.001.02 message
-        Parameters
-        ----------
-        data : str, default None
-            Payment message as string
-        message_type : str, default None
-            Type of Payment
-    """
-    def validate(self,data,payment_type):
+        Returns:
+            [type]: [description]
+        """
 
-        if (payment_type not in self.payments_types) :
-            return {
-                'isValid':False,
-                'error_messages': ['Message type not found.']
-            }
-
-        with open(self.payments_types[payment_type]) as f:
+        with open(payment_conf.xsd_filepath) as f:
             schema_root = f.read()
         
         schema_doc = etree.parse(io.BytesIO(schema_root.encode('utf-8')))
