@@ -1,3 +1,6 @@
+from io import BytesIO, StringIO
+import xml.etree.cElementTree as ET
+
 class IbanData:
     def __init__(self,bic,iban,name):
         """ IbanData constructor
@@ -59,4 +62,22 @@ class SCTInst:
             transaction (Transaction): Transaction
         """
         self.transactions.append(transaction)
+    
+    def to_xml(self):
+        
+        
+        ET.register_namespace('',"urn:iso:std:iso:20022:tech:xsd:pacs.008.001.02")
+
+        root = ET.Element("Document")
+        doc = ET.SubElement(root, "FIToFICstmrCdtTrf")
+        
+        tree = ET.ElementTree(root)
+        xml_buffer = BytesIO()
+        tree.write(xml_buffer,
+                   encoding='utf-8',
+                   xml_declaration=True)
+        
+        
+        return xml_buffer.read()
+
 

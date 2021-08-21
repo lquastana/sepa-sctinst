@@ -10,6 +10,27 @@ schema_validation = SchemaValidation()
 message_type_not_found = 'Message type not found.'
 message_empty = 'Document is empty'
 
+def init_default_message():
+    message_identification='msg_id',
+    initiating_party_name='Your name',
+    debtor = IbanData('BOUSFRPPXXX','FR7630001007941234567890185','My company')
+    sct_message = SCTInst(message_identification,initiating_party_name,debtor)
+    
+    transation = Transaction(
+        name = 'Name of the creditor',
+        bic = 'BOUSFRPPXXX',
+        iban = 'FR7630001007941234567890185',
+        amount = 100.12,
+        instruction = '12345',
+        reference = 'XYZ-1234/123',
+        remittance_information = 'remittance_information',
+        requested_date = date(2002, 12, 4),
+        )
+    sct_message.add_transaction(transation)
+    return sct_message
+    
+    
+
 @pytest.mark.parametrize(
     "filename,message_type,is_valid,error_msg_present,expected_message",[
         ('sctinst/test/pacs008_files/pacs008_valid.xml','TOTOInst', False, True,message_type_not_found), 
@@ -46,21 +67,14 @@ def test_pacs008_add_transaction():
     message_identification='msg_id',
     initiating_party_name='Your name',
     debtor = IbanData('BOUSFRPPXXX','FR7630001007941234567890185','My company')
-    sct_message = SCTInst(message_identification,initiating_party_name,debtor)
-    
-    transation = Transaction(
-        name = 'Name of the creditor',
-        bic = 'BOUSFRPPXXX',
-        iban = 'FR7630001007941234567890185',
-        amount = 100.12,
-        instruction = '12345',
-        reference = 'XYZ-1234/123',
-        remittance_information = 'remittance_information',
-        requested_date = date(2002, 12, 4),
-        )
-    sct_message.add_transaction(transation)
-    
+
+    sct_message = init_default_message()
     assert sct_message.message_identification == message_identification
     assert sct_message.initiating_party_name == initiating_party_name
-    assert sct_message.debtor == debtor
+    assert sct_message.debtor.bic == debtor.bic
     assert len(sct_message.transactions) == 1
+    
+def test_pacs008_to_xml():
+    sct_message = init_default_message()
+    xml_message = sct_message.to_xml()
+    print(xml_message)
