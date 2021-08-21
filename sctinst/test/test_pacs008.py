@@ -1,9 +1,8 @@
 import pytest
 
-from datetime import date
-
+from datetime import date,datetime
 from sctinst.schema_validation import SchemaValidation
-from sctinst.pacs008 import SCTInst,IbanData,Transaction
+from sctinst.pacs008 import SCTInst,GroupHeader,Transaction,Participant
 
 schema_validation = SchemaValidation()
 
@@ -11,25 +10,16 @@ message_type_not_found = 'Message type not found.'
 message_empty = 'Document is empty'
 
 def init_default_message():
-    message_identification='msg_id'
-    initiating_party_name='Your name'
-    debtor = IbanData('BOUSFRPPXXX','FR7630001007941234567890185','My company')
-    sct_message = SCTInst(message_identification,initiating_party_name,debtor)
+    group_header = GroupHeader('MSGID1234',datetime.today(),date.today(),'CLRG')
+    originator = Participant('BOUSFRPPXXX','FR7630001007941234567890185','My company')
+    sct_message = SCTInst(group_header,originator,[])
     return sct_message
     
 
     
 def add_default_trasaction(sct_message):
-    transation = Transaction(
-        name = 'Name of the creditor',
-        bic = 'BOUSFRPPXXX',
-        iban = 'FR7630001007941234567890185',
-        amount = 100.12,
-        instruction = '12345',
-        reference = 'XYZ-1234/123',
-        remittance_information = 'remittance_information',
-        requested_date = date(2002, 12, 4),
-        )
+    beneficiary = Participant('BOUSFRPPXXX','FR7630001007941234567890185','My company')
+    transation = Transaction(beneficiary,10.12,'end to end instr','tx id',datetime.now(),'reference','remittance information')
     sct_message.add_transaction(transation)
     
     
@@ -57,15 +47,12 @@ def test_pacs008_xsd(filename,message_type,is_valid,error_msg_present,expected_m
         
         
 def test_pacs008_init():
-    message_identification='msg_id'
-    initiating_party_name='Your name'
-    debtor = IbanData('BOUSFRPPXXX','FR7630001007941234567890185','My company')
+    
     sct_message = init_default_message()
     
     
-    assert sct_message.message_identification == message_identification
-    assert sct_message.initiating_party_name == initiating_party_name
-    assert sct_message.debtor.bic == debtor.bic
+    assert len(sct_message.group_header.message_identification) > 1
+    assert len(sct_message.originator.bic) > 1
     
 def test_pacs008_add_transaction():
     sct_message = init_default_message()
