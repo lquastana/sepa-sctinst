@@ -1,13 +1,11 @@
 
-from sepa_sctinst import PaymentConfiguration
+from sepa_sctinst import MessageConfiguration
 import lxml
 from lxml import etree
 import io
 
-
-
 class SchemaValidation:
-    def validate(self,data:str,payment_conf:PaymentConfiguration):
+    def validate(self,data:str,payment_conf:MessageConfiguration):
         """ XSD Validation for SCTInst payment
 
         Args:
