@@ -45,7 +45,7 @@ python -m pip install -e .
 
 ## Documentation
 
-The official documentation is hosted on xxx.org: https://xxx.pydata.org/xxx-docs/stable
+The official documentation is hosted on readthedocs.io: https://sepa-sctinst.readthedocs.io/en/latest/
 
 
 <!-- 
