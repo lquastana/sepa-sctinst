@@ -45,11 +45,12 @@ python -m pip install -e .
 
 ## Documentation
 
-The official documentation is hosted on readthedocs.io: https://sepa-sctinst.readthedocs.io/en/latest/
+The official documentation generated with [pdoc](https://pdoc3.github.io/pdoc/) and hosted on Github: https://lquastana.github.io/sepa-sctinst/sepa_sctinst.html
 
 
 <!-- 
 pytest --cov=sepa_sctinst
-pdoc --html --output-dir ./doc ./sepa_sctinst/ --force
-
+pdoc --output-dir ./docs ./sepa_sctinst
+python -m build
+python -m twine upload --repository pypi dist/*
 -->

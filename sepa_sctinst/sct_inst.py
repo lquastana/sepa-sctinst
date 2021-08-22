@@ -10,20 +10,33 @@ CHARGE_BEARER='SLEV'
 CURRENCY='EUR'
 
 class GroupHeader:
+    """A class to represent the group header in interbank SCTInst message
     
+    Set of characteristics shared by all individual transactions included in the message.
+    """
+    
+    message_identification:str
+    """Message Identification assigned by the
+instructing party, and sent to the next party in the
+chain to unambiguously identify the message."""
+    creation_datetime:datetime
+    """Date and time at which the message was created."""
+    interbank_sttlmt_date:date
+    """Date on which the amount of money ceases to be
+available to the agent that owes it and when the
+amount of money becomes available to the agent
+to which it is due."""
+    sttlmt_method:str
+    """Method used to settle the (batch of) payment
+instructions.Only CLRG, INGA and INDA are allowed"""
+        
     def __init__(self,
                  message_identification:str,
                  creation_datetime:datetime,
                  interbank_sttlmt_date:date,
                  sttlmt_method:str
                  ):
-        """GroupHeader constructor
-
-        Args:
-            message_identification (str): Message Identification
-            creation_datetime (datetime): Creation Date Time
-            interbank_sttlmt_date (date): Interbank Settlement Date
-            sttlmt_method (str): Settlement Method
+        """Initializes a group header object
         """
         self.message_identification = message_identification
         self.creation_datetime = creation_datetime
@@ -31,32 +44,53 @@ class GroupHeader:
         self.sttlmt_method = sttlmt_method
 
 class Participant:
-    def __init__(self,bic,iban,name):
-        """ Participant constructor
-
-        Args:
-            bic (str): OPTIONAL Business Identifier Code
-            iban (str): International Bank Account Number of the creditor
-            name (str): Name of the initiating party and creditor
-        """        
+    """A class to represent the group header in interbank SCTInst message
+    """
+    
+    bic:str
+    """The BIC code of the participant Bank"""
+    iban:str
+    """The IBAN of the account"""
+    name:str
+    """The name of the account"""
+    
+      
+    def __init__(self,bic:str,iban:str,name:str):
+        """Initializes a participant object
+        """  
         self.bic = bic
         self.iban = iban
         self.name = name
 
 class Transaction:
+    """A class to represent the group header in interbank SCTInst message
+    
+    """
+    
+    beneficiary:Participant
+    """Beneficiary informations as `sepa_sctinst.sct_inst.Participant`"""
+    amount:float
+    """The amount of the SCT Inst in Euro """
+    end_to_end_id:str
+    """Original End To End Identification. Unique identification, as assigned by the original
+initiating party """    
+    tx_id:str
+    """Original Transaction Identification. Unique identification, as assigned by the original
+first instructing agent """
+    acceptance_datetime:datetime
+    """Point in time when the payment order from the
+initiating party meets the processing conditions of
+the account servicing agent."""
+    reference:str
+    """Reference information provided by the creditor to
+allow the identification of the underlying
+documents."""
+    remittance_information:str
+    """Remittance information"""
+    
     def __init__(self,beneficiary:Participant,amount:float,end_to_end_id:str,tx_id:str,acceptance_datetime:datetime,reference:str,remittance_information:str):
-        """[summary]
-
-        Args:
-            beneficiary (Participant): Beneficiary informations
-            amount (float): Amount
-            end_to_end_id (str): End To End Identification
-            tx_id (str): Transaction Identification
-            acceptance_datetime (datetime): Acceptance Date Time
-            reference (str): Reference
-            remittance_information (str): Remittance information
-        """
-        
+        """Initializes a transaction object
+        """ 
         self.beneficiary = beneficiary
         self.amount = amount
         self.tx_id = tx_id
@@ -66,19 +100,18 @@ class Transaction:
         self.remittance_information = remittance_information,
 
 class SCTInst:
-    
+    """A class to represent a SCTInst interbank message
+    """
     group_header:GroupHeader
+    """`sepa_sctinst.sct_inst.GroupHeader` object shared by all individual transactions included in the message. """
     originator:Participant
+    """Originator `sepa_sctinst.sct_inst.Participant` object that initiates the payment. """
     transaction:Transaction
+    """`sepa_sctinst.sct_inst.Transaction` object give information about the transaction. """
 
     def __init__(self,group_header:GroupHeader,originator:Participant,transaction:Transaction):
-        """SCTInst constructor
-
-        Args:
-            group_header (GroupHeader): Group Header
-            originator (Participant): Originator informations
-            transaction (Transaction): Transaction informations
-        """
+        """Initializes a SCTInst object
+        """ 
         self.group_header = group_header
         self.originator = originator
         self.transaction = transaction
@@ -87,8 +120,7 @@ class SCTInst:
     def random():
         """Generate random SCTInst object
 
-        Returns:
-            SCTInst: SCTInst object with random value
+        Returns `sepa_sctinst.sct_inst.SCTInst` object with random value
         """
         fake = Faker()
         
@@ -111,9 +143,7 @@ class SCTInst:
 
     def to_xml(self):
         """ Generate message as XML Document
-
-        Returns:
-            str: XML dcoument
+        Returns a string as XML dcoument
         """
         
         root = ET.Element("Document")
