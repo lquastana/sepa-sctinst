@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(name="sepa-sctinst",
-      version="1.0a1",
+      version="1.0a2",
       description="SEPA SCTInst is a python package that provides some features to manage SCTInst payments",
       long_description=long_description,
       long_description_content_type="text/markdown",

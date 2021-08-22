@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.99">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>str1234</MsgId>
+      <CreDtTm>2012-12-13T12:12:12</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>123.45</CtrlSum>
+      <InitgPty>
+        <Nm>Initiator Name</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>str1234</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>123.45</CtrlSum>
+      <ReqdExctnDt>2012-12-13</ReqdExctnDt>
+      <Dbtr>
+        <Nm>str1234</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>FR7630001007941234567890185</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId />
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>str1234</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">10 </InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>str1234</Nm>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>FR7630001007941234567890185</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
