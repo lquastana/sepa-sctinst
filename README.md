@@ -50,6 +50,7 @@ The official documentation is hosted on readthedocs.io: https://sepa-sctinst.rea
 
 <!-- 
 pytest --cov=sepa_sctinst
-pdoc --html --output-dir ./doc ./sepa_sctinst/ --force
-
+pdoc --output-dir ./docs ./sepa_sctinst
+python -m build
+python -m twine upload --repository pypi dist/*
 -->

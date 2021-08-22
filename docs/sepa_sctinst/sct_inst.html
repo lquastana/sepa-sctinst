@@ -36,6 +36,18 @@
                         <li>
                                 <a class="function" href="#GroupHeader.__init__">GroupHeader</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#GroupHeader.message_identification">message_identification</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GroupHeader.creation_datetime">creation_datetime</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GroupHeader.interbank_sttlmt_date">interbank_sttlmt_date</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GroupHeader.sttlmt_method">sttlmt_method</a>
+                        </li>
                 </ul>
 
             </li>
@@ -44,6 +56,15 @@
                             <ul class="memberlist">
                         <li>
                                 <a class="function" href="#Participant.__init__">Participant</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Participant.bic">bic</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Participant.iban">iban</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Participant.name">name</a>
                         </li>
                 </ul>
 
@@ -54,6 +75,27 @@
                         <li>
                                 <a class="function" href="#Transaction.__init__">Transaction</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#Transaction.beneficiary">beneficiary</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Transaction.amount">amount</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Transaction.end_to_end_id">end_to_end_id</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Transaction.tx_id">tx_id</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Transaction.acceptance_datetime">acceptance_datetime</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Transaction.reference">reference</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Transaction.remittance_information">remittance_information</a>
+                        </li>
                 </ul>
 
             </li>
@@ -62,6 +104,15 @@
                             <ul class="memberlist">
                         <li>
                                 <a class="function" href="#SCTInst.__init__">SCTInst</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SCTInst.group_header">group_header</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SCTInst.originator">originator</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SCTInst.transaction">transaction</a>
                         </li>
                         <li>
                                 <a class="function" href="#SCTInst.random">random</a>
@@ -112,20 +163,33 @@
 <span class="n">CURRENCY</span><span class="o">=</span><span class="s1">&#39;EUR&#39;</span>
 
 <span class="k">class</span> <span class="nc">GroupHeader</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent the group header in interbank SCTInst message</span>
+<span class="sd">    </span>
+<span class="sd">    Set of characteristics shared by all individual transactions included in the message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="n">message_identification</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Message Identification assigned by the</span>
+<span class="sd">instructing party, and sent to the next party in the</span>
+<span class="sd">chain to unambiguously identify the message.&quot;&quot;&quot;</span>
+    <span class="n">creation_datetime</span><span class="p">:</span><span class="n">datetime</span>
+    <span class="sd">&quot;&quot;&quot;Date and time at which the message was created.&quot;&quot;&quot;</span>
+    <span class="n">interbank_sttlmt_date</span><span class="p">:</span><span class="n">date</span>
+    <span class="sd">&quot;&quot;&quot;Date on which the amount of money ceases to be</span>
+<span class="sd">available to the agent that owes it and when the</span>
+<span class="sd">amount of money becomes available to the agent</span>
+<span class="sd">to which it is due.&quot;&quot;&quot;</span>
+    <span class="n">sttlmt_method</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Method used to settle the (batch of) payment</span>
+<span class="sd">instructions.Only CLRG, INGA and INDA are allowed&quot;&quot;&quot;</span>
+        
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">message_identification</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
                  <span class="n">creation_datetime</span><span class="p">:</span><span class="n">datetime</span><span class="p">,</span>
                  <span class="n">interbank_sttlmt_date</span><span class="p">:</span><span class="n">date</span><span class="p">,</span>
                  <span class="n">sttlmt_method</span><span class="p">:</span><span class="nb">str</span>
                  <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;GroupHeader constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            message_identification (str): Message Identification</span>
-<span class="sd">            creation_datetime (datetime): Creation Date Time</span>
-<span class="sd">            interbank_sttlmt_date (date): Interbank Settlement Date</span>
-<span class="sd">            sttlmt_method (str): Settlement Method</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a group header object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">message_identification</span> <span class="o">=</span> <span class="n">message_identification</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">creation_datetime</span> <span class="o">=</span> <span class="n">creation_datetime</span>
@@ -133,32 +197,53 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sttlmt_method</span> <span class="o">=</span> <span class="n">sttlmt_method</span>
 
 <span class="k">class</span> <span class="nc">Participant</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bic</span><span class="p">,</span><span class="n">iban</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Participant constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            bic (str): OPTIONAL Business Identifier Code</span>
-<span class="sd">            iban (str): International Bank Account Number of the creditor</span>
-<span class="sd">            name (str): Name of the initiating party and creditor</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+    <span class="sd">&quot;&quot;&quot;A class to represent the group header in interbank SCTInst message</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">bic</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;The BIC code of the participant Bank&quot;&quot;&quot;</span>
+    <span class="n">iban</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;The IBAN of the account&quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;The name of the account&quot;&quot;&quot;</span>
+    
+      
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bic</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">iban</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a participant object</span>
+<span class="sd">        &quot;&quot;&quot;</span>  
         <span class="bp">self</span><span class="o">.</span><span class="n">bic</span> <span class="o">=</span> <span class="n">bic</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">iban</span> <span class="o">=</span> <span class="n">iban</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 
 <span class="k">class</span> <span class="nc">Transaction</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent the group header in interbank SCTInst message</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">beneficiary</span><span class="p">:</span><span class="n">Participant</span>
+    <span class="sd">&quot;&quot;&quot;Beneficiary informations as `sepa_sctinst.sct_inst.Participant`&quot;&quot;&quot;</span>
+    <span class="n">amount</span><span class="p">:</span><span class="nb">float</span>
+    <span class="sd">&quot;&quot;&quot;The amount of the SCT Inst in Euro &quot;&quot;&quot;</span>
+    <span class="n">end_to_end_id</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Original End To End Identification. Unique identification, as assigned by the original</span>
+<span class="sd">initiating party &quot;&quot;&quot;</span>    
+    <span class="n">tx_id</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Original Transaction Identification. Unique identification, as assigned by the original</span>
+<span class="sd">first instructing agent &quot;&quot;&quot;</span>
+    <span class="n">acceptance_datetime</span><span class="p">:</span><span class="n">datetime</span>
+    <span class="sd">&quot;&quot;&quot;Point in time when the payment order from the</span>
+<span class="sd">initiating party meets the processing conditions of</span>
+<span class="sd">the account servicing agent.&quot;&quot;&quot;</span>
+    <span class="n">reference</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Reference information provided by the creditor to</span>
+<span class="sd">allow the identification of the underlying</span>
+<span class="sd">documents.&quot;&quot;&quot;</span>
+    <span class="n">remittance_information</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Remittance information&quot;&quot;&quot;</span>
+    
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">beneficiary</span><span class="p">:</span><span class="n">Participant</span><span class="p">,</span><span class="n">amount</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">end_to_end_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">tx_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">acceptance_datetime</span><span class="p">:</span><span class="n">datetime</span><span class="p">,</span><span class="n">reference</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">remittance_information</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;[summary]</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            beneficiary (Participant): Beneficiary informations</span>
-<span class="sd">            amount (float): Amount</span>
-<span class="sd">            end_to_end_id (str): End To End Identification</span>
-<span class="sd">            tx_id (str): Transaction Identification</span>
-<span class="sd">            acceptance_datetime (datetime): Acceptance Date Time</span>
-<span class="sd">            reference (str): Reference</span>
-<span class="sd">            remittance_information (str): Remittance information</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        
+        <span class="sd">&quot;&quot;&quot;Initializes a transaction object</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">beneficiary</span> <span class="o">=</span> <span class="n">beneficiary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">amount</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tx_id</span> <span class="o">=</span> <span class="n">tx_id</span>
@@ -168,19 +253,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">remittance_information</span> <span class="o">=</span> <span class="n">remittance_information</span><span class="p">,</span>
 
 <span class="k">class</span> <span class="nc">SCTInst</span><span class="p">:</span>
-    
+    <span class="sd">&quot;&quot;&quot;A class to represent a SCTInst interbank message</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">group_header</span><span class="p">:</span><span class="n">GroupHeader</span>
+    <span class="sd">&quot;&quot;&quot;`sepa_sctinst.sct_inst.GroupHeader` object shared by all individual transactions included in the message. &quot;&quot;&quot;</span>
     <span class="n">originator</span><span class="p">:</span><span class="n">Participant</span>
+    <span class="sd">&quot;&quot;&quot;Originator `sepa_sctinst.sct_inst.Participant` object that initiates the payment. &quot;&quot;&quot;</span>
     <span class="n">transaction</span><span class="p">:</span><span class="n">Transaction</span>
+    <span class="sd">&quot;&quot;&quot;`sepa_sctinst.sct_inst.Transaction` object give information about the transaction. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">group_header</span><span class="p">:</span><span class="n">GroupHeader</span><span class="p">,</span><span class="n">originator</span><span class="p">:</span><span class="n">Participant</span><span class="p">,</span><span class="n">transaction</span><span class="p">:</span><span class="n">Transaction</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;SCTInst constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            group_header (GroupHeader): Group Header</span>
-<span class="sd">            originator (Participant): Originator informations</span>
-<span class="sd">            transaction (Transaction): Transaction informations</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a SCTInst object</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">group_header</span> <span class="o">=</span> <span class="n">group_header</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">originator</span> <span class="o">=</span> <span class="n">originator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
@@ -189,8 +273,7 @@
     <span class="k">def</span> <span class="nf">random</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Generate random SCTInst object</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            SCTInst: SCTInst object with random value</span>
+<span class="sd">        Returns `sepa_sctinst.sct_inst.SCTInst` object with random value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fake</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span>
         
@@ -213,9 +296,7 @@
 
     <span class="k">def</span> <span class="nf">to_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Generate message as XML Document</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            str: XML dcoument</span>
+<span class="sd">        Returns a string as XML dcoument</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s2">&quot;Document&quot;</span><span class="p">)</span>
@@ -340,20 +421,33 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">GroupHeader</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent the group header in interbank SCTInst message</span>
+<span class="sd">    </span>
+<span class="sd">    Set of characteristics shared by all individual transactions included in the message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="n">message_identification</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Message Identification assigned by the</span>
+<span class="sd">instructing party, and sent to the next party in the</span>
+<span class="sd">chain to unambiguously identify the message.&quot;&quot;&quot;</span>
+    <span class="n">creation_datetime</span><span class="p">:</span><span class="n">datetime</span>
+    <span class="sd">&quot;&quot;&quot;Date and time at which the message was created.&quot;&quot;&quot;</span>
+    <span class="n">interbank_sttlmt_date</span><span class="p">:</span><span class="n">date</span>
+    <span class="sd">&quot;&quot;&quot;Date on which the amount of money ceases to be</span>
+<span class="sd">available to the agent that owes it and when the</span>
+<span class="sd">amount of money becomes available to the agent</span>
+<span class="sd">to which it is due.&quot;&quot;&quot;</span>
+    <span class="n">sttlmt_method</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Method used to settle the (batch of) payment</span>
+<span class="sd">instructions.Only CLRG, INGA and INDA are allowed&quot;&quot;&quot;</span>
+        
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">message_identification</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
                  <span class="n">creation_datetime</span><span class="p">:</span><span class="n">datetime</span><span class="p">,</span>
                  <span class="n">interbank_sttlmt_date</span><span class="p">:</span><span class="n">date</span><span class="p">,</span>
                  <span class="n">sttlmt_method</span><span class="p">:</span><span class="nb">str</span>
                  <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;GroupHeader constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            message_identification (str): Message Identification</span>
-<span class="sd">            creation_datetime (datetime): Creation Date Time</span>
-<span class="sd">            interbank_sttlmt_date (date): Interbank Settlement Date</span>
-<span class="sd">            sttlmt_method (str): Settlement Method</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a group header object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">message_identification</span> <span class="o">=</span> <span class="n">message_identification</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">creation_datetime</span> <span class="o">=</span> <span class="n">creation_datetime</span>
@@ -363,7 +457,11 @@
 
         </details>
 
-    
+            <div class="docstring"><p>A class to represent the group header in interbank SCTInst message</p>
+
+<p>Set of characteristics shared by all individual transactions included in the message.</p>
+</div>
+
 
                             <div id="GroupHeader.__init__" class="classattr">
                                         <div class="attr function"><a class="headerlink" href="#GroupHeader.__init__">#&nbsp;&nbsp</a>
@@ -385,13 +483,7 @@
                  <span class="n">interbank_sttlmt_date</span><span class="p">:</span><span class="n">date</span><span class="p">,</span>
                  <span class="n">sttlmt_method</span><span class="p">:</span><span class="nb">str</span>
                  <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;GroupHeader constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            message_identification (str): Message Identification</span>
-<span class="sd">            creation_datetime (datetime): Creation Date Time</span>
-<span class="sd">            interbank_sttlmt_date (date): Interbank Settlement Date</span>
-<span class="sd">            sttlmt_method (str): Settlement Method</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a group header object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">message_identification</span> <span class="o">=</span> <span class="n">message_identification</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">creation_datetime</span> <span class="o">=</span> <span class="n">creation_datetime</span>
@@ -401,13 +493,57 @@
 
         </details>
 
-            <div class="docstring"><p>GroupHeader constructor</p>
+            <div class="docstring"><p>Initializes a group header object</p>
+</div>
 
-<p>Args:
-    message_identification (str): Message Identification
-    creation_datetime (datetime): Creation Date Time
-    interbank_sttlmt_date (date): Interbank Settlement Date
-    sttlmt_method (str): Settlement Method</p>
+
+                            </div>
+                            <div id="GroupHeader.message_identification" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#GroupHeader.message_identification">#&nbsp;&nbsp</a>
+
+        <span class="name">message_identification</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>Message Identification assigned by the
+instructing party, and sent to the next party in the
+chain to unambiguously identify the message.</p>
+</div>
+
+
+                            </div>
+                            <div id="GroupHeader.creation_datetime" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#GroupHeader.creation_datetime">#&nbsp;&nbsp</a>
+
+        <span class="name">creation_datetime</span><span class="annotation">: datetime.datetime</span>
+    </div>
+
+            <div class="docstring"><p>Date and time at which the message was created.</p>
+</div>
+
+
+                            </div>
+                            <div id="GroupHeader.interbank_sttlmt_date" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#GroupHeader.interbank_sttlmt_date">#&nbsp;&nbsp</a>
+
+        <span class="name">interbank_sttlmt_date</span><span class="annotation">: datetime.date</span>
+    </div>
+
+            <div class="docstring"><p>Date on which the amount of money ceases to be
+available to the agent that owes it and when the
+amount of money becomes available to the agent
+to which it is due.</p>
+</div>
+
+
+                            </div>
+                            <div id="GroupHeader.sttlmt_method" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#GroupHeader.sttlmt_method">#&nbsp;&nbsp</a>
+
+        <span class="name">sttlmt_method</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>Method used to settle the (batch of) payment
+instructions.Only CLRG, INGA and INDA are allowed</p>
 </div>
 
 
@@ -425,14 +561,20 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Participant</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bic</span><span class="p">,</span><span class="n">iban</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Participant constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            bic (str): OPTIONAL Business Identifier Code</span>
-<span class="sd">            iban (str): International Bank Account Number of the creditor</span>
-<span class="sd">            name (str): Name of the initiating party and creditor</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+    <span class="sd">&quot;&quot;&quot;A class to represent the group header in interbank SCTInst message</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">bic</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;The BIC code of the participant Bank&quot;&quot;&quot;</span>
+    <span class="n">iban</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;The IBAN of the account&quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;The name of the account&quot;&quot;&quot;</span>
+    
+      
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bic</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">iban</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a participant object</span>
+<span class="sd">        &quot;&quot;&quot;</span>  
         <span class="bp">self</span><span class="o">.</span><span class="n">bic</span> <span class="o">=</span> <span class="n">bic</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">iban</span> <span class="o">=</span> <span class="n">iban</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -440,25 +582,22 @@
 
         </details>
 
-    
+            <div class="docstring"><p>A class to represent the group header in interbank SCTInst message</p>
+</div>
+
 
                             <div id="Participant.__init__" class="classattr">
                                         <div class="attr function"><a class="headerlink" href="#Participant.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">Participant</span><span class="signature">(bic, iban, name)</span>
+            <span class="name">Participant</span><span class="signature">(bic: str, iban: str, name: str)</span>
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bic</span><span class="p">,</span><span class="n">iban</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Participant constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            bic (str): OPTIONAL Business Identifier Code</span>
-<span class="sd">            iban (str): International Bank Account Number of the creditor</span>
-<span class="sd">            name (str): Name of the initiating party and creditor</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bic</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">iban</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a participant object</span>
+<span class="sd">        &quot;&quot;&quot;</span>  
         <span class="bp">self</span><span class="o">.</span><span class="n">bic</span> <span class="o">=</span> <span class="n">bic</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">iban</span> <span class="o">=</span> <span class="n">iban</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -466,12 +605,40 @@
 
         </details>
 
-            <div class="docstring"><p>Participant constructor</p>
+            <div class="docstring"><p>Initializes a participant object</p>
+</div>
 
-<p>Args:
-    bic (str): OPTIONAL Business Identifier Code
-    iban (str): International Bank Account Number of the creditor
-    name (str): Name of the initiating party and creditor</p>
+
+                            </div>
+                            <div id="Participant.bic" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Participant.bic">#&nbsp;&nbsp</a>
+
+        <span class="name">bic</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>The BIC code of the participant Bank</p>
+</div>
+
+
+                            </div>
+                            <div id="Participant.iban" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Participant.iban">#&nbsp;&nbsp</a>
+
+        <span class="name">iban</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>The IBAN of the account</p>
+</div>
+
+
+                            </div>
+                            <div id="Participant.name" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Participant.name">#&nbsp;&nbsp</a>
+
+        <span class="name">name</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>The name of the account</p>
 </div>
 
 
@@ -489,19 +656,34 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Transaction</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A class to represent the group header in interbank SCTInst message</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">beneficiary</span><span class="p">:</span><span class="n">Participant</span>
+    <span class="sd">&quot;&quot;&quot;Beneficiary informations as `sepa_sctinst.sct_inst.Participant`&quot;&quot;&quot;</span>
+    <span class="n">amount</span><span class="p">:</span><span class="nb">float</span>
+    <span class="sd">&quot;&quot;&quot;The amount of the SCT Inst in Euro &quot;&quot;&quot;</span>
+    <span class="n">end_to_end_id</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Original End To End Identification. Unique identification, as assigned by the original</span>
+<span class="sd">initiating party &quot;&quot;&quot;</span>    
+    <span class="n">tx_id</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Original Transaction Identification. Unique identification, as assigned by the original</span>
+<span class="sd">first instructing agent &quot;&quot;&quot;</span>
+    <span class="n">acceptance_datetime</span><span class="p">:</span><span class="n">datetime</span>
+    <span class="sd">&quot;&quot;&quot;Point in time when the payment order from the</span>
+<span class="sd">initiating party meets the processing conditions of</span>
+<span class="sd">the account servicing agent.&quot;&quot;&quot;</span>
+    <span class="n">reference</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Reference information provided by the creditor to</span>
+<span class="sd">allow the identification of the underlying</span>
+<span class="sd">documents.&quot;&quot;&quot;</span>
+    <span class="n">remittance_information</span><span class="p">:</span><span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;Remittance information&quot;&quot;&quot;</span>
+    
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">beneficiary</span><span class="p">:</span><span class="n">Participant</span><span class="p">,</span><span class="n">amount</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">end_to_end_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">tx_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">acceptance_datetime</span><span class="p">:</span><span class="n">datetime</span><span class="p">,</span><span class="n">reference</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">remittance_information</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;[summary]</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            beneficiary (Participant): Beneficiary informations</span>
-<span class="sd">            amount (float): Amount</span>
-<span class="sd">            end_to_end_id (str): End To End Identification</span>
-<span class="sd">            tx_id (str): Transaction Identification</span>
-<span class="sd">            acceptance_datetime (datetime): Acceptance Date Time</span>
-<span class="sd">            reference (str): Reference</span>
-<span class="sd">            remittance_information (str): Remittance information</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        
+        <span class="sd">&quot;&quot;&quot;Initializes a transaction object</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">beneficiary</span> <span class="o">=</span> <span class="n">beneficiary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">amount</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tx_id</span> <span class="o">=</span> <span class="n">tx_id</span>
@@ -513,7 +695,9 @@
 
         </details>
 
-    
+            <div class="docstring"><p>A class to represent the group header in interbank SCTInst message</p>
+</div>
+
 
                             <div id="Transaction.__init__" class="classattr">
                                         <div class="attr function"><a class="headerlink" href="#Transaction.__init__">#&nbsp;&nbsp</a>
@@ -533,18 +717,8 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">beneficiary</span><span class="p">:</span><span class="n">Participant</span><span class="p">,</span><span class="n">amount</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">end_to_end_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">tx_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">acceptance_datetime</span><span class="p">:</span><span class="n">datetime</span><span class="p">,</span><span class="n">reference</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">remittance_information</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;[summary]</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            beneficiary (Participant): Beneficiary informations</span>
-<span class="sd">            amount (float): Amount</span>
-<span class="sd">            end_to_end_id (str): End To End Identification</span>
-<span class="sd">            tx_id (str): Transaction Identification</span>
-<span class="sd">            acceptance_datetime (datetime): Acceptance Date Time</span>
-<span class="sd">            reference (str): Reference</span>
-<span class="sd">            remittance_information (str): Remittance information</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        
+        <span class="sd">&quot;&quot;&quot;Initializes a transaction object</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">beneficiary</span> <span class="o">=</span> <span class="n">beneficiary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">amount</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tx_id</span> <span class="o">=</span> <span class="n">tx_id</span>
@@ -556,16 +730,90 @@
 
         </details>
 
-            <div class="docstring"><p>[summary]</p>
+            <div class="docstring"><p>Initializes a transaction object</p>
+</div>
 
-<p>Args:
-    beneficiary (Participant): Beneficiary informations
-    amount (float): Amount
-    end_to_end_id (str): End To End Identification
-    tx_id (str): Transaction Identification
-    acceptance_datetime (datetime): Acceptance Date Time
-    reference (str): Reference
-    remittance_information (str): Remittance information</p>
+
+                            </div>
+                            <div id="Transaction.beneficiary" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Transaction.beneficiary">#&nbsp;&nbsp</a>
+
+        <span class="name">beneficiary</span><span class="annotation">: <a href="#Participant">sepa_sctinst.sct_inst.Participant</a></span>
+    </div>
+
+            <div class="docstring"><p>Beneficiary informations as <code><a href="#Participant">sepa_sctinst.sct_inst.Participant</a></code></p>
+</div>
+
+
+                            </div>
+                            <div id="Transaction.amount" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Transaction.amount">#&nbsp;&nbsp</a>
+
+        <span class="name">amount</span><span class="annotation">: float</span>
+    </div>
+
+            <div class="docstring"><p>The amount of the SCT Inst in Euro</p>
+</div>
+
+
+                            </div>
+                            <div id="Transaction.end_to_end_id" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Transaction.end_to_end_id">#&nbsp;&nbsp</a>
+
+        <span class="name">end_to_end_id</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>Original End To End Identification. Unique identification, as assigned by the original
+initiating party</p>
+</div>
+
+
+                            </div>
+                            <div id="Transaction.tx_id" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Transaction.tx_id">#&nbsp;&nbsp</a>
+
+        <span class="name">tx_id</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>Original Transaction Identification. Unique identification, as assigned by the original
+first instructing agent</p>
+</div>
+
+
+                            </div>
+                            <div id="Transaction.acceptance_datetime" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Transaction.acceptance_datetime">#&nbsp;&nbsp</a>
+
+        <span class="name">acceptance_datetime</span><span class="annotation">: datetime.datetime</span>
+    </div>
+
+            <div class="docstring"><p>Point in time when the payment order from the
+initiating party meets the processing conditions of
+the account servicing agent.</p>
+</div>
+
+
+                            </div>
+                            <div id="Transaction.reference" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Transaction.reference">#&nbsp;&nbsp</a>
+
+        <span class="name">reference</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>Reference information provided by the creditor to
+allow the identification of the underlying
+documents.</p>
+</div>
+
+
+                            </div>
+                            <div id="Transaction.remittance_information" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Transaction.remittance_information">#&nbsp;&nbsp</a>
+
+        <span class="name">remittance_information</span><span class="annotation">: str</span>
+    </div>
+
+            <div class="docstring"><p>Remittance information</p>
 </div>
 
 
@@ -583,19 +831,18 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">SCTInst</span><span class="p">:</span>
-    
+    <span class="sd">&quot;&quot;&quot;A class to represent a SCTInst interbank message</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">group_header</span><span class="p">:</span><span class="n">GroupHeader</span>
+    <span class="sd">&quot;&quot;&quot;`sepa_sctinst.sct_inst.GroupHeader` object shared by all individual transactions included in the message. &quot;&quot;&quot;</span>
     <span class="n">originator</span><span class="p">:</span><span class="n">Participant</span>
+    <span class="sd">&quot;&quot;&quot;Originator `sepa_sctinst.sct_inst.Participant` object that initiates the payment. &quot;&quot;&quot;</span>
     <span class="n">transaction</span><span class="p">:</span><span class="n">Transaction</span>
+    <span class="sd">&quot;&quot;&quot;`sepa_sctinst.sct_inst.Transaction` object give information about the transaction. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">group_header</span><span class="p">:</span><span class="n">GroupHeader</span><span class="p">,</span><span class="n">originator</span><span class="p">:</span><span class="n">Participant</span><span class="p">,</span><span class="n">transaction</span><span class="p">:</span><span class="n">Transaction</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;SCTInst constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            group_header (GroupHeader): Group Header</span>
-<span class="sd">            originator (Participant): Originator informations</span>
-<span class="sd">            transaction (Transaction): Transaction informations</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a SCTInst object</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">group_header</span> <span class="o">=</span> <span class="n">group_header</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">originator</span> <span class="o">=</span> <span class="n">originator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
@@ -604,8 +851,7 @@
     <span class="k">def</span> <span class="nf">random</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Generate random SCTInst object</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            SCTInst: SCTInst object with random value</span>
+<span class="sd">        Returns `sepa_sctinst.sct_inst.SCTInst` object with random value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fake</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span>
         
@@ -628,9 +874,7 @@
 
     <span class="k">def</span> <span class="nf">to_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Generate message as XML Document</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            str: XML dcoument</span>
+<span class="sd">        Returns a string as XML dcoument</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s2">&quot;Document&quot;</span><span class="p">)</span>
@@ -742,7 +986,9 @@
 
         </details>
 
-    
+            <div class="docstring"><p>A class to represent a SCTInst interbank message</p>
+</div>
+
 
                             <div id="SCTInst.__init__" class="classattr">
                                         <div class="attr function"><a class="headerlink" href="#SCTInst.__init__">#&nbsp;&nbsp</a>
@@ -758,13 +1004,8 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">group_header</span><span class="p">:</span><span class="n">GroupHeader</span><span class="p">,</span><span class="n">originator</span><span class="p">:</span><span class="n">Participant</span><span class="p">,</span><span class="n">transaction</span><span class="p">:</span><span class="n">Transaction</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;SCTInst constructor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            group_header (GroupHeader): Group Header</span>
-<span class="sd">            originator (Participant): Originator informations</span>
-<span class="sd">            transaction (Transaction): Transaction informations</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a SCTInst object</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">group_header</span> <span class="o">=</span> <span class="n">group_header</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">originator</span> <span class="o">=</span> <span class="n">originator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">transaction</span>
@@ -772,12 +1013,40 @@
 
         </details>
 
-            <div class="docstring"><p>SCTInst constructor</p>
+            <div class="docstring"><p>Initializes a SCTInst object</p>
+</div>
 
-<p>Args:
-    group_header (GroupHeader): Group Header
-    originator (Participant): Originator informations
-    transaction (Transaction): Transaction informations</p>
+
+                            </div>
+                            <div id="SCTInst.group_header" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#SCTInst.group_header">#&nbsp;&nbsp</a>
+
+        <span class="name">group_header</span><span class="annotation">: <a href="#GroupHeader">sepa_sctinst.sct_inst.GroupHeader</a></span>
+    </div>
+
+            <div class="docstring"><p><code><a href="#GroupHeader">sepa_sctinst.sct_inst.GroupHeader</a></code> object shared by all individual transactions included in the message.</p>
+</div>
+
+
+                            </div>
+                            <div id="SCTInst.originator" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#SCTInst.originator">#&nbsp;&nbsp</a>
+
+        <span class="name">originator</span><span class="annotation">: <a href="#Participant">sepa_sctinst.sct_inst.Participant</a></span>
+    </div>
+
+            <div class="docstring"><p>Originator <code><a href="#Participant">sepa_sctinst.sct_inst.Participant</a></code> object that initiates the payment.</p>
+</div>
+
+
+                            </div>
+                            <div id="SCTInst.transaction" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#SCTInst.transaction">#&nbsp;&nbsp</a>
+
+        <span class="name">transaction</span><span class="annotation">: <a href="#Transaction">sepa_sctinst.sct_inst.Transaction</a></span>
+    </div>
+
+            <div class="docstring"><p><code><a href="#Transaction">sepa_sctinst.sct_inst.Transaction</a></code> object give information about the transaction.</p>
 </div>
 
 
@@ -797,8 +1066,7 @@
     <span class="k">def</span> <span class="nf">random</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Generate random SCTInst object</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            SCTInst: SCTInst object with random value</span>
+<span class="sd">        Returns `sepa_sctinst.sct_inst.SCTInst` object with random value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fake</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span>
         
@@ -822,8 +1090,7 @@
 
             <div class="docstring"><p>Generate random SCTInst object</p>
 
-<p>Returns:
-    SCTInst: SCTInst object with random value</p>
+<p>Returns <code><a href="#SCTInst">sepa_sctinst.sct_inst.SCTInst</a></code> object with random value</p>
 </div>
 
 
@@ -840,9 +1107,7 @@
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">to_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Generate message as XML Document</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            str: XML dcoument</span>
+<span class="sd">        Returns a string as XML dcoument</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s2">&quot;Document&quot;</span><span class="p">)</span>
@@ -859,10 +1124,8 @@
 
         </details>
 
-            <div class="docstring"><p>Generate message as XML Document</p>
-
-<p>Returns:
-    str: XML dcoument</p>
+            <div class="docstring"><p>Generate message as XML Document
+Returns a string as XML dcoument</p>
 </div>
 
 

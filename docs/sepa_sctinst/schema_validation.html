@@ -67,15 +67,18 @@
 <span class="kn">import</span> <span class="nn">io</span>
 
 <span class="k">class</span> <span class="nc">SchemaValidation</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to validate SCTInst messages.</span>
+
+<span class="sd">    A schema validation object provide a schema validation method </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">payment_conf</span><span class="p">:</span><span class="n">MessageConfiguration</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; XSD Validation for SCTInst payment</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            data (str): XML Data</span>
-<span class="sd">            payment_conf (PaymentConfiguration): Payment configuration</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: Dict with isValid and error_messages if isValid = False</span>
+        <span class="sd">&quot;&quot;&quot; XSD Validation for SCTInst messages</span>
+<span class="sd">        where `data` is a XML message as string,</span>
+<span class="sd">        `payment_conf` is an `sepa_sctinst.MessageConfiguration` wich provide the schema to use for validation</span>
+<span class="sd">        Returns a `dict` with isValid key and error_messages key if isValid = False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">payment_conf</span><span class="o">.</span><span class="n">xsd_filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -110,15 +113,18 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">SchemaValidation</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to validate SCTInst messages.</span>
+
+<span class="sd">    A schema validation object provide a schema validation method </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">payment_conf</span><span class="p">:</span><span class="n">MessageConfiguration</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; XSD Validation for SCTInst payment</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            data (str): XML Data</span>
-<span class="sd">            payment_conf (PaymentConfiguration): Payment configuration</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: Dict with isValid and error_messages if isValid = False</span>
+        <span class="sd">&quot;&quot;&quot; XSD Validation for SCTInst messages</span>
+<span class="sd">        where `data` is a XML message as string,</span>
+<span class="sd">        `payment_conf` is an `sepa_sctinst.MessageConfiguration` wich provide the schema to use for validation</span>
+<span class="sd">        Returns a `dict` with isValid key and error_messages key if isValid = False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">payment_conf</span><span class="o">.</span><span class="n">xsd_filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -140,7 +146,11 @@
 
         </details>
 
-    
+            <div class="docstring"><p>A class to validate SCTInst messages.</p>
+
+<p>A schema validation object provide a schema validation method</p>
+</div>
+
 
                             <div id="SchemaValidation.__init__" class="classattr">
                                         <div class="attr function"><a class="headerlink" href="#SchemaValidation.__init__">#&nbsp;&nbsp</a>
@@ -164,14 +174,10 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">payment_conf</span><span class="p">:</span><span class="n">MessageConfiguration</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; XSD Validation for SCTInst payment</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            data (str): XML Data</span>
-<span class="sd">            payment_conf (PaymentConfiguration): Payment configuration</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: Dict with isValid and error_messages if isValid = False</span>
+        <span class="sd">&quot;&quot;&quot; XSD Validation for SCTInst messages</span>
+<span class="sd">        where `data` is a XML message as string,</span>
+<span class="sd">        `payment_conf` is an `sepa_sctinst.MessageConfiguration` wich provide the schema to use for validation</span>
+<span class="sd">        Returns a `dict` with isValid key and error_messages key if isValid = False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">payment_conf</span><span class="o">.</span><span class="n">xsd_filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -193,14 +199,10 @@
 
         </details>
 
-            <div class="docstring"><p>XSD Validation for SCTInst payment</p>
-
-<p>Args:
-    data (str): XML Data
-    payment_conf (PaymentConfiguration): Payment configuration</p>
-
-<p>Returns:
-    dict: Dict with isValid and error_messages if isValid = False</p>
+            <div class="docstring"><p>XSD Validation for SCTInst messages
+where <code>data</code> is a XML message as string,
+<code>payment_conf</code> is an <code><a href="../sepa_sctinst.html#MessageConfiguration">sepa_sctinst.MessageConfiguration</a></code> wich provide the schema to use for validation
+Returns a <code>dict</code> with isValid key and error_messages key if isValid = False</p>
 </div>
 
 
