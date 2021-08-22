@@ -45,7 +45,7 @@ python -m pip install -e .
 
 ## Documentation
 
-The official documentation is hosted on readthedocs.io: https://sepa-sctinst.readthedocs.io/en/latest/
+The official documentation generated with [pdoc](https://pdoc3.github.io/pdoc/) and hosted on Github: https://lquastana.github.io/sepa-sctinst/sepa_sctinst.html
 
 
 <!-- 
