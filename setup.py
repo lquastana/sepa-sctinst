@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name="sepa-sctinst",
-      version="0.0.1",
+      version="1.0a1",
       description="Tools for SCTInst payment scheme",
       author="lquastana",
       packages=["sepa_sctinst"],
