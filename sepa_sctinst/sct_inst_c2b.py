@@ -212,7 +212,6 @@ of the payment transactions. """
             
         cdt_tx_pmt = ET.SubElement(cdt_tx, "RmtInf")
         cdt_tx_pmt_rem_inf = ET.SubElement(cdt_tx_pmt, "Ustrd")
-        print(transaction.remittance_information)
         cdt_tx_pmt_rem_inf.text = transaction.remittance_information
         
         

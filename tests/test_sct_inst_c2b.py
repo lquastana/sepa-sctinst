@@ -3,6 +3,7 @@ from sepa_sctinst.schema_validation import SchemaValidation
 from sepa_sctinst.sct_inst_c2b import SCTInstC2B,GroupHeader,Transaction,Participant,PaymentInformation
 from sepa_sctinst import Message
 from faker import Faker
+import pytest
 
 fake = Faker()
 
@@ -34,10 +35,15 @@ def test_sct_inst_c2b_to_xml():
     
     xml_message = sct_message.to_xml()
     response = schema_validation.validate(xml_message,Message.SCTINST_C2B)
-    
-    print(response)
 
     assert response['isValid'] == True
+    
+def test_sct_inst_c2b_no_transaction():
+    sct_message = init_default_message()
+    sct_message.transactions = []
+    
+    with pytest.raises(ValueError):
+        sct_message.to_xml()
 
 
     

@@ -44,7 +44,7 @@ class MessageConfiguration:
 
 class Message:
     """ 
-    All `sepa_sctinst.MessageConfiguration` objects available on the SCTInst schema (Interbank and C2B)
+    All `sepa_sctinst.MessageConfiguration` objects available on the SCTInst scheme (Interbank and C2B)
     """
     SCTINST = MessageConfiguration(SCTInst,
                                    'sepa_sctinst/xsd/pacs.008.001.02.xsd',
