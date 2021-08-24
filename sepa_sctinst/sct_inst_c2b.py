@@ -158,7 +158,7 @@ of the payment transactions. """
         group_header = GroupHeader(fake.bothify(text='MSGID?????????'),fake.date_time(),'Initiator '+fake.name())
         originator = Participant(fake.lexify(text='????',letters='ABCDEFGRHIJKL') + fake.bank_country() + 'PPXXX',
                                  fake.iban(),fake.name())
-        payment_inf = PaymentInformation('TXID?????????',bool(random.getrandbits(1)),fake.date_object())
+        payment_inf = PaymentInformation('TXID?????????',fake.pybool(),fake.date_object())
         
         transactions = []
         
@@ -217,7 +217,7 @@ of the payment transactions. """
         
         
     def xml_party_inf(self, node:ET.SubElement,
-                      transaction:Transaction, 
+                      transaction, 
                       stakeholder:str):
         stakeholder_node = ET.Element(stakeholder)
         stakeholder_name = ET.SubElement(stakeholder_node, 'Nm')
