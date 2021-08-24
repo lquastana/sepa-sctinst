@@ -1,6 +1,5 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime,date
-import functools
 import random
 from faker import Faker
 
@@ -44,7 +43,7 @@ instructions.Only CLRG, INGA and INDA are allowed"""
         self.sttlmt_method = sttlmt_method
 
 class Participant:
-    """A class to represent the group header in interbank SCTInst message
+    """A class to represent a participant in interbank SCTInst message
     """
     
     bic:str
@@ -63,7 +62,7 @@ class Participant:
         self.name = name
 
 class Transaction:
-    """A class to represent the group header in interbank SCTInst message
+    """A class to represent a transaction in interbank SCTInst message
     
     """
     
