@@ -1,4 +1,5 @@
-from sepa_sctinst.sct_inst import SCTInst
+from sepa_sctinst.sct_inst_interbank import SCTInst
+from sepa_sctinst.sct_inst_c2b import SCTInstC2B
 from lxml import etree as ET
 import re
 
@@ -44,7 +45,7 @@ class MessageConfiguration:
 
 class Message:
     """ 
-    All `sepa_sctinst.MessageConfiguration` objects available on the SCTInst schema (Interbank and C2B)
+    All `sepa_sctinst.MessageConfiguration` objects available on the SCTInst scheme (Interbank and C2B)
     """
     SCTINST = MessageConfiguration(SCTInst,
                                    'sepa_sctinst/xsd/pacs.008.001.02.xsd',
@@ -85,7 +86,7 @@ class Message:
                                          'sepa_sctinst/xsd/pacs.028.001.01_RFRO_Update.xsd',
                                          'urn:iso:std:iso:20022:tech:xsd:pacs.028.001.01')
     
-    SCTINST_C2B = MessageConfiguration('SCTInstC2B',
+    SCTINST_C2B = MessageConfiguration(SCTInstC2B,
                                        'sepa_sctinst/xsd/pain.001.001.03.xsd',
                                        'urn:iso:std:iso:20022:tech:xsd:pain.001.001.03')
     SCTINST_C2B_BACK = MessageConfiguration('SCTInstBackC2B',

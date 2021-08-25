@@ -6,9 +6,9 @@ import io
 
 class SchemaValidation:
     """
-    A class to validate SCTInst messages.
+    A class to validate SCTInst messages
 
-    A schema validation object provide a schema validation method 
+    This object provide a schema validation method 
 
     """
     
@@ -16,7 +16,8 @@ class SchemaValidation:
         """ XSD Validation for SCTInst messages
         where `data` is a XML message as string,
         `payment_conf` is an `sepa_sctinst.MessageConfiguration` wich provide the schema to use for validation
-        Returns a `dict` with isValid key and error_messages key if isValid = False
+        
+        Return: A `dict` with isValid key and error_messages key if isValid = False
         """
 
         with open(payment_conf.xsd_filepath) as f:
