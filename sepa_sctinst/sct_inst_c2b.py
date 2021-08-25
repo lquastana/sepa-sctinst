@@ -1,3 +1,4 @@
+from sepa_sctinst.sct_inst_common import Participant
 import xml.etree.ElementTree as ET
 from datetime import datetime,date
 import functools
@@ -36,26 +37,6 @@ usually used to identify that party."""
         self.creation_datetime = creation_datetime
         self.init_party_name = init_party_name
         
-
-
-class Participant:
-    """A class to represent a participant in C2B SCTInst message
-    """
-    
-    bic:str
-    """The BIC code of the participant Bank"""
-    iban:str
-    """The IBAN of the account"""
-    name:str
-    """The name of the account"""
-    
-      
-    def __init__(self,bic:str,iban:str,name:str):
-        """Initializes a participant object
-        """  
-        self.bic = bic
-        self.iban = iban
-        self.name = name
         
 class PaymentInformation:
     """A class to represent a payment information in C2B SCTInst message
@@ -208,52 +189,12 @@ of the payment transactions. """
         cdt_tx_pmt_inst_amt.set('Ccy',CURRENCY)
         cdt_tx_pmt_inst_amt.text = str(transaction.amount)
         
-        self.xml_party_inf(cdt_tx,transaction,'Cdtr')
+        Participant.to_xml(self,cdt_tx,transaction,'Cdtr')
             
         cdt_tx_pmt = ET.SubElement(cdt_tx, "RmtInf")
         cdt_tx_pmt_rem_inf = ET.SubElement(cdt_tx_pmt, "Ustrd")
         cdt_tx_pmt_rem_inf.text = transaction.remittance_information
         
-        
-        
-    def xml_party_inf(self, node:ET.SubElement,
-                      transaction, 
-                      stakeholder:str):
-        stakeholder_node = ET.Element(stakeholder)
-        stakeholder_name = ET.SubElement(stakeholder_node, 'Nm')
-        if stakeholder == 'Dbtr':
-            stakeholder_name.text = self.originator.name
-        else:
-            stakeholder_name.text = transaction.beneficiary.name
-        
-        stakeholder_acct = ET.Element(stakeholder+'Acct')
-        stakeholder_acct_id = ET.SubElement(stakeholder_acct, 'Id')
-        stakeholder_acct_iban = ET.SubElement(stakeholder_acct_id, 'IBAN')
-        if stakeholder == 'Dbtr':
-            stakeholder_acct_iban.text = self.originator.iban
-        else:
-            stakeholder_acct_iban.text = transaction.beneficiary.iban
-        
-        stakeholder_agt = ET.Element(stakeholder+'Agt')
-        stakeholder_agt_fin_inst = ET.SubElement(stakeholder_agt, 'FinInstnId')
-        stakeholder_agt_fin_inst_bic = ET.SubElement(stakeholder_agt_fin_inst, 'BIC')
-        if stakeholder == 'Dbtr':
-            stakeholder_agt_fin_inst_bic.text = self.originator.bic
-        else:
-            stakeholder_agt_fin_inst_bic.text = transaction.beneficiary.bic
-        
-        if stakeholder == 'Dbtr':
-            node.append(stakeholder_node)
-            node.append(stakeholder_acct)
-            node.append(stakeholder_agt)
-        else:
-            node.append(stakeholder_agt)
-            node.append(stakeholder_node)
-            node.append(stakeholder_acct)
-               
-            
-            
-
 
     def xml_header(self, root_fito):
         
@@ -302,7 +243,7 @@ of the payment transactions. """
         payment_information_req_exc_date = ET.SubElement(payment_information, "ReqdExctnDt")
         payment_information_req_exc_date.text = str(self.payment_information.requ_exe_date)
         
-        self.xml_party_inf(payment_information, None, 'Dbtr')
+        Participant.to_xml(self,payment_information, None, 'Dbtr')
         
         payment_information_charge_bearer = ET.SubElement(payment_information, "ChrgBr")
         payment_information_charge_bearer.text = CHARGE_BEARER
