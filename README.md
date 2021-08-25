@@ -45,7 +45,7 @@ python -m pip install -e .
 
 ## Documentation
 
-The official documentation generated with [pdoc](https://pdoc3.github.io/pdoc/) and hosted on Github: https://lquastana.github.io/sepa-sctinst/sepa_sctinst.html
+The official documentation generated with [sphinx](https://www.sphinx-doc.org/en/master/index.html) and hosted on Github: https://lquastana.github.io/sepa-sctinst/sepa_sctinst.html
 
 
 <!-- 
