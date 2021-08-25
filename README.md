@@ -5,6 +5,7 @@
 # SEPA SCTInst: A powerful Python SEPA toolkit for SCTInst Payments
 [![codecov](https://codecov.io/gh/lquastana/sepa-sctinst/branch/main/graph/badge.svg?token=15NMHC642N)](https://codecov.io/gh/lquastana/sepa-sctinst)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lquastana_sepa-sctinst&metric=alert_status)](https://sonarcloud.io/dashboard?id=lquastana_sepa-sctinst)
+[![Documentation Status](https://readthedocs.org/projects/sepa-sctinst/badge/?version=latest)](https://sepa-sctinst.readthedocs.io/en/latest/?badge=latest)
 
 ## What is it?
 
