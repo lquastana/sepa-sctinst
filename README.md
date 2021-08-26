@@ -3,8 +3,10 @@
 </div>
 
 # SEPA SCTInst: A powerful Python SEPA toolkit for SCTInst Payments
+[![PyPI version](https://badge.fury.io/py/sepa-sctinst.svg)](https://badge.fury.io/py/sepa-sctinst)
 [![codecov](https://codecov.io/gh/lquastana/sepa-sctinst/branch/main/graph/badge.svg?token=15NMHC642N)](https://codecov.io/gh/lquastana/sepa-sctinst)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lquastana_sepa-sctinst&metric=alert_status)](https://sonarcloud.io/dashboard?id=lquastana_sepa-sctinst)
+[![Documentation Status](https://readthedocs.org/projects/sepa-sctinst/badge/?version=latest)](https://sepa-sctinst.readthedocs.io/en/latest/?badge=latest)
 
 ## What is it?
 
@@ -45,11 +47,12 @@ python -m pip install -e .
 
 ## Documentation
 
-The official documentation is hosted on readthedocs.io: https://sepa-sctinst.readthedocs.io/en/latest/
+The official documentation generated with [sphinx](https://www.sphinx-doc.org/en/master/index.html) and hosted on Github: https://sepa-sctinst.readthedocs.io/
 
 
 <!-- 
 pytest --cov=sepa_sctinst
-pdoc --html --output-dir ./doc ./sepa_sctinst/ --force
-
+pdoc --output-dir ./docs ./sepa_sctinst
+python -m build
+python -m twine upload --repository pypi dist/*
 -->

@@ -1,6 +1,6 @@
+from sepa_sctinst.sct_inst_common import Participant
 import xml.etree.ElementTree as ET
 from datetime import datetime,date
-import functools
 import random
 from faker import Faker
 
@@ -10,53 +10,69 @@ CHARGE_BEARER='SLEV'
 CURRENCY='EUR'
 
 class GroupHeader:
+    """A class to represent the group header in interbank SCTInst message
     
+    Set of characteristics shared by all individual transactions included in the message.
+    """
+    
+    message_identification:str
+    """Message Identification assigned by the
+instructing party, and sent to the next party in the
+chain to unambiguously identify the message."""
+    creation_datetime:datetime
+    """Date and time at which the message was created."""
+    interbank_sttlmt_date:date
+    """Date on which the amount of money ceases to be
+available to the agent that owes it and when the
+amount of money becomes available to the agent
+to which it is due."""
+    sttlmt_method:str
+    """Method used to settle the (batch of) payment
+instructions.Only CLRG, INGA and INDA are allowed"""
+        
     def __init__(self,
                  message_identification:str,
                  creation_datetime:datetime,
                  interbank_sttlmt_date:date,
                  sttlmt_method:str
                  ):
-        """GroupHeader constructor
-
-        Args:
-            message_identification (str): Message Identification
-            creation_datetime (datetime): Creation Date Time
-            interbank_sttlmt_date (date): Interbank Settlement Date
-            sttlmt_method (str): Settlement Method
+        """Initializes a group header object
         """
         self.message_identification = message_identification
         self.creation_datetime = creation_datetime
         self.interbank_sttlmt_date = interbank_sttlmt_date
         self.sttlmt_method = sttlmt_method
 
-class Participant:
-    def __init__(self,bic,iban,name):
-        """ Participant constructor
-
-        Args:
-            bic (str): OPTIONAL Business Identifier Code
-            iban (str): International Bank Account Number of the creditor
-            name (str): Name of the initiating party and creditor
-        """        
-        self.bic = bic
-        self.iban = iban
-        self.name = name
 
 class Transaction:
+    """A class to represent a transaction in interbank SCTInst message
+    
+    """
+    
+    beneficiary:Participant
+    """Beneficiary informations as `sepa_sctinst.sct_inst.Participant`"""
+    amount:float
+    """The amount of the SCT Inst in Euro """
+    end_to_end_id:str
+    """Original End To End Identification. Unique identification, as assigned by the original
+initiating party """    
+    tx_id:str
+    """Original Transaction Identification. Unique identification, as assigned by the original
+first instructing agent """
+    acceptance_datetime:datetime
+    """Point in time when the payment order from the
+initiating party meets the processing conditions of
+the account servicing agent."""
+    reference:str
+    """Reference information provided by the creditor to
+allow the identification of the underlying
+documents."""
+    remittance_information:str
+    """Remittance information"""
+    
     def __init__(self,beneficiary:Participant,amount:float,end_to_end_id:str,tx_id:str,acceptance_datetime:datetime,reference:str,remittance_information:str):
-        """[summary]
-
-        Args:
-            beneficiary (Participant): Beneficiary informations
-            amount (float): Amount
-            end_to_end_id (str): End To End Identification
-            tx_id (str): Transaction Identification
-            acceptance_datetime (datetime): Acceptance Date Time
-            reference (str): Reference
-            remittance_information (str): Remittance information
-        """
-        
+        """Initializes a transaction object
+        """ 
         self.beneficiary = beneficiary
         self.amount = amount
         self.tx_id = tx_id
@@ -66,19 +82,18 @@ class Transaction:
         self.remittance_information = remittance_information,
 
 class SCTInst:
-    
+    """A class to represent a SCTInst interbank message
+    """
     group_header:GroupHeader
+    """`sepa_sctinst.sct_inst.GroupHeader` object shared by all individual transactions included in the message. """
     originator:Participant
+    """Originator `sepa_sctinst.sct_inst.Participant` object that initiates the payment. """
     transaction:Transaction
+    """`sepa_sctinst.sct_inst.Transaction` object give information about the transaction. """
 
     def __init__(self,group_header:GroupHeader,originator:Participant,transaction:Transaction):
-        """SCTInst constructor
-
-        Args:
-            group_header (GroupHeader): Group Header
-            originator (Participant): Originator informations
-            transaction (Transaction): Transaction informations
-        """
+        """Initializes a SCTInst object
+        """ 
         self.group_header = group_header
         self.originator = originator
         self.transaction = transaction
@@ -87,8 +102,7 @@ class SCTInst:
     def random():
         """Generate random SCTInst object
 
-        Returns:
-            SCTInst: SCTInst object with random value
+        Returns `sepa_sctinst.sct_inst.SCTInst` object with random value
         """
         fake = Faker()
         
@@ -111,9 +125,7 @@ class SCTInst:
 
     def to_xml(self):
         """ Generate message as XML Document
-
-        Returns:
-            str: XML dcoument
+        Returns a string as XML dcoument
         """
         
         root = ET.Element("Document")
@@ -148,45 +160,9 @@ class SCTInst:
         cdt_tx_pmt_chrbr = ET.SubElement(cdt_tx, "ChrgBr")
         cdt_tx_pmt_chrbr.text = CHARGE_BEARER
         
-        self.xml_party_inf(cdt_tx,self.transaction,'Dbtr')
-        self.xml_party_inf(cdt_tx,self.transaction,'Cdtr')
+        Participant.to_xml(self,cdt_tx,self.transaction,'Dbtr')
+        Participant.to_xml(self,cdt_tx,self.transaction,'Cdtr')
         
-        
-    def xml_party_inf(self, transaction_node:ET.SubElement,transaction:Transaction, stakeholder:str):
-        stakeholder_node = ET.Element(stakeholder)
-        stakeholder_name = ET.SubElement(stakeholder_node, 'Nm')
-        if stakeholder == 'Dbtr':
-            stakeholder_name.text = self.originator.name
-        else:
-            stakeholder_name.text = transaction.beneficiary.name
-        
-        stakeholder_acct = ET.Element(stakeholder+'Acct')
-        stakeholder_acct_id = ET.SubElement(stakeholder_acct, 'Id')
-        stakeholder_acct_iban = ET.SubElement(stakeholder_acct_id, 'IBAN')
-        if stakeholder == 'Dbtr':
-            stakeholder_acct_iban.text = self.originator.iban
-        else:
-            stakeholder_acct_iban.text = transaction.beneficiary.iban
-        
-        stakeholder_agt = ET.Element(stakeholder+'Agt')
-        stakeholder_agt_fin_inst = ET.SubElement(stakeholder_agt, 'FinInstnId')
-        stakeholder_agt_fin_inst_bic = ET.SubElement(stakeholder_agt_fin_inst, 'BIC')
-        if stakeholder == 'Dbtr':
-            stakeholder_agt_fin_inst_bic.text = self.originator.bic
-        else:
-            stakeholder_agt_fin_inst_bic.text = transaction.beneficiary.bic
-        
-        if stakeholder == 'Dbtr':
-            transaction_node.append(stakeholder_node)
-            transaction_node.append(stakeholder_acct)
-            transaction_node.append(stakeholder_agt)
-        else:
-            transaction_node.append(stakeholder_agt)
-            transaction_node.append(stakeholder_node)
-            transaction_node.append(stakeholder_acct)
-               
-            
-            
 
 
     def xml_header(self, root_fito):

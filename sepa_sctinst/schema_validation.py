@@ -5,15 +5,19 @@ from lxml import etree
 import io
 
 class SchemaValidation:
+    """
+    A class to validate SCTInst messages
+
+    This object provide a schema validation method 
+
+    """
+    
     def validate(self,data:str,payment_conf:MessageConfiguration):
-        """ XSD Validation for SCTInst payment
-
-        Args:
-            data (str): XML Data
-            payment_conf (PaymentConfiguration): Payment configuration
-
-        Returns:
-            dict: Dict with isValid and error_messages if isValid = False
+        """ XSD Validation for SCTInst messages
+        where `data` is a XML message as string,
+        `payment_conf` is an `sepa_sctinst.MessageConfiguration` wich provide the schema to use for validation
+        
+        Return: A `dict` with isValid key and error_messages key if isValid = False
         """
 
         with open(payment_conf.xsd_filepath) as f:

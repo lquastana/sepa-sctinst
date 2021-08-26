@@ -1,6 +1,7 @@
 from datetime import date,datetime
 from sepa_sctinst.schema_validation import SchemaValidation
-from sepa_sctinst.sct_inst import SCTInst,GroupHeader,Transaction,Participant
+from sepa_sctinst.sct_inst_interbank import SCTInst,GroupHeader,Transaction
+from sepa_sctinst.sct_inst_common import Participant
 from sepa_sctinst import Message
 from faker import Faker
 
