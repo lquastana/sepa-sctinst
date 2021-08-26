@@ -25,5 +25,44 @@ Package Index (PyPI)](https://pypi.org/project/sepa-sctinst)
 
 .. code-block:: shell
 
-    pip install sepa-sctinst
+   pip install sepa-sctinst
+
+
+Schema validation
+------------------------------------------------
+
+To validate a SCTInst XML message use the :class:`~sepa_sctinst.schema_validation.SchemaValidation` class.
+To choose the type of message use the :class:`~sepa_sctinst.Message` class
+ .. code-block:: python
+
+    from sepa_sctinst.schema_validation import SchemaValidation
+    from sepa_sctinst import Message
+
+    with open(filename, 'r') as input:
+        data = input.read()
+    
+    response = schema_validation.validate(data,Message.SCTINST)
+
+    if response['isValid']:
+        print('Valid message!')
+    else:
+        print(response['error_messages'])
+
+If you don't know what type of message to use, call the :meth:`~sepa_sctinst.MessageConfiguration.autodetect` method.
+
+ .. code-block:: python
+
+    from sepa_sctinst.schema_validation import SchemaValidation
+    from sepa_sctinst import Message,MessageConfiguration
+
+    with open(filename, 'r') as input:
+        data = input.read()
+    
+    response = schema_validation.validate(
+        data,
+        MessageConfiguration.autodetect(data))
+
+
+
+
 
