@@ -53,3 +53,12 @@ def test_sct_inst_c2b_random():
     response = schema_validation.validate(random_message.to_xml(),Message.SCTINST_C2B)
     assert response['isValid'] == True
     
+def test_sct_inst_to_interbank():
+    random_message = SCTInstC2B.random(4)
+    interbanks = random_message.to_interbank('CLRG')
+    
+    for message in interbanks:
+        response = schema_validation.validate(message.to_xml(),Message.SCTINST)
+        assert response['isValid'] == True
+    assert len(interbanks) == 4
+    

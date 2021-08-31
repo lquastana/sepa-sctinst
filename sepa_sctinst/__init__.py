@@ -1,7 +1,7 @@
-from sepa_sctinst.sct_inst_interbank import SCTInst
-from sepa_sctinst.sct_inst_c2b import SCTInstC2B
-from lxml import etree as ET
+from faker import Faker
 import re
+
+
 
 class MessageConfiguration:
     """
@@ -19,13 +19,34 @@ class MessageConfiguration:
     xmlns:str
     """XML namespace"""
     
-    def  __init__(self,code:str,xsd_filepath:str,xmlns:str):
+    fn_msg_id:str
+    """Message ID generator function"""
+    
+    fn_tx_id:str
+    """Transaction ID generator function"""
+
+
+    
+    def  __init__(self,code:str,xsd_filepath:str,xmlns:str,fn_msg_id=None,fn_tx_id=None):
         """
         Initializes a message configuration
         """
         self.code = code
         self.xsd_filepath = xsd_filepath
         self.xmlns = xmlns
+        self.fn_msg_id = fn_msg_id if fn_msg_id is not None else self.gen_message_id
+        self.fn_tx_id = fn_tx_id if fn_msg_id is not None else self.gen_tx_id
+    
+    @staticmethod
+    def gen_message_id():
+        fake = Faker()
+        return fake.bothify(text='MSGID??????????????????????????????')
+    
+    @staticmethod
+    def gen_tx_id():
+        fake = Faker()
+        return fake.bothify(text='TXID??????????????????????????????')
+    
 
     @staticmethod
     def autodetect(data):
@@ -47,7 +68,7 @@ class Message:
     """ 
     All `sepa_sctinst.MessageConfiguration` objects available on the SCTInst scheme (Interbank and C2B)
     """
-    SCTINST = MessageConfiguration(SCTInst,
+    SCTINST = MessageConfiguration('SCTInst',
                                    'sepa_sctinst/xsd/pacs.008.001.02.xsd',
                                    'urn:iso:std:iso:20022:tech:xsd:pacs.008.001.02')
     POSITIVE_STATUS = MessageConfiguration('PositiveStatus',
@@ -86,7 +107,7 @@ class Message:
                                          'sepa_sctinst/xsd/pacs.028.001.01_RFRO_Update.xsd',
                                          'urn:iso:std:iso:20022:tech:xsd:pacs.028.001.01')
     
-    SCTINST_C2B = MessageConfiguration(SCTInstC2B,
+    SCTINST_C2B = MessageConfiguration('SCTInstC2B',
                                        'sepa_sctinst/xsd/pain.001.001.03.xsd',
                                        'urn:iso:std:iso:20022:tech:xsd:pain.001.001.03')
     SCTINST_C2B_BACK = MessageConfiguration('SCTInstBackC2B',

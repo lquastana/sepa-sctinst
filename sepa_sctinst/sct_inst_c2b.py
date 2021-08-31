@@ -1,6 +1,7 @@
 from sepa_sctinst.sct_inst_common import Participant
 import xml.etree.ElementTree as ET
 from datetime import datetime,date
+import sepa_sctinst.sct_inst_interbank as sct_inst_inbk
 import functools
 import random
 from faker import Faker
@@ -92,8 +93,10 @@ an accounts' receivable system."""
         self.amount = amount
         self.end_to_end_id = end_to_end_id
         self.remittance_information = remittance_information
+        
+from sepa_sctinst import Message, MessageConfiguration
 
-class SCTInstC2B:
+class SCTInstC2B(MessageConfiguration):
     """A class to represent a SCTInst C2B message
     """
     group_header:GroupHeader
@@ -106,9 +109,19 @@ of the payment transactions. """
     transactions:list
     """List of all `sepa_sctinst.sct_inst_c2b.Transaction`"""
 
-    def __init__(self,group_header:GroupHeader,originator:Participant,payment_information:PaymentInformation,transactions:list):
+    def __init__(self,group_header:GroupHeader,
+                 originator:Participant,
+                 payment_information:PaymentInformation,
+                 transactions:list,
+                 message_configuration:MessageConfiguration=Message.SCTINST_C2B):
         """Initializes a SCTInstC2B object
         """ 
+        super().__init__(message_configuration.code,
+                         message_configuration.xsd_filepath,
+                         message_configuration.xmlns,
+                         message_configuration.fn_msg_id,
+                         message_configuration.fn_tx_id)
+        
         self.group_header = group_header
         self.originator = originator
         self.payment_information = payment_information
@@ -116,6 +129,33 @@ of the payment transactions. """
         
     def add_transaction(self,transaction):
         self.transactions.append(transaction)
+    
+    def to_interbank(self,sttlmt_method):
+        sctinsts = []
+        
+        group_header = sct_inst_inbk.GroupHeader(self.fn_msg_id(),
+                                                 datetime.now(),date.today(),
+                                                 sttlmt_method
+                                                 )
+        originator = sct_inst_inbk.Participant(self.originator.bic,
+                                               self.originator.iban,
+                                               self.originator.name)
+        
+        
+        for transaction in self.transactions:
+            
+            beneficiary = sct_inst_inbk.Participant(transaction.beneficiary.bic,
+                                                transaction.beneficiary.iban,
+                                                transaction.beneficiary.name)
+            transation = sct_inst_inbk.Transaction(beneficiary,10.12,transaction.end_to_end_id,
+                                     self.fn_tx_id(),
+                                     datetime.now(),
+                                     'reference',transaction.remittance_information)
+            sctinsts.append(sct_inst_inbk.SCTInst(group_header,originator,transation))
+            
+        
+        return sctinsts
+        
 
     @staticmethod
     def random(nb_txs):
