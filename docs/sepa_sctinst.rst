@@ -1,8 +1,22 @@
 sepa\_sctinst package
 =====================
 
-Submodules
-----------
+
+sepa\_sctinst.default\_messages module
+-----------------------------------------------
+
+.. automodule:: sepa_sctinst.default_messages
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+sepa\_sctinst.message module
+---------------------------------------
+
+.. automodule:: sepa_sctinst.message
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 sepa\_sctinst.schema\_validation module
 ---------------------------------------
@@ -12,18 +26,10 @@ sepa\_sctinst.schema\_validation module
    :undoc-members:
    :show-inheritance:
 
-sepa\_sctinst.sct\_inst\_c2b module
------------------------------------
+sepa\_sctinst.participant module
+----------------------------------------------
 
-.. automodule:: sepa_sctinst.sct_inst_c2b
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-sepa\_sctinst.sct\_inst\_common module
---------------------------------------
-
-.. automodule:: sepa_sctinst.sct_inst_common
+.. automodule:: sepa_sctinst.participant
    :members:
    :undoc-members:
    :show-inheritance:
@@ -36,10 +42,10 @@ sepa\_sctinst.sct\_inst\_interbank module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
+sepa\_sctinst.sct\_inst\_c2b module
+-----------------------------------
 
-.. automodule:: sepa_sctinst
+.. automodule:: sepa_sctinst.sct_inst_c2b
    :members:
    :undoc-members:
    :show-inheritance:
