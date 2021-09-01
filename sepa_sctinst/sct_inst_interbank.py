@@ -50,7 +50,7 @@ class Transaction:
     """
     
     beneficiary:Participant
-    """Beneficiary informations as `sepa_sctinst.participant.Participant`"""
+    """Beneficiary informations as :class:`sepa_sctinst.participant.Participant`"""
     amount:float
     """The amount of the SCT Inst in Euro """
     end_to_end_id:str
@@ -85,11 +85,11 @@ class SCTInst:
     """A class to represent a SCTInst interbank message
     """
     group_header:GroupHeader
-    """`sepa_sctinst.sct_inst.GroupHeader` object shared by all individual transactions included in the message. """
+    """:class:`sepa_sctinst.sct_inst.GroupHeader` object shared by all individual transactions included in the message. """
     originator:Participant
-    """Originator `sepa_sctinst.participant.Participant` object that initiates the payment. """
+    """Originator :class:`sepa_sctinst.participant.Participant` object that initiates the payment. """
     transaction:Transaction
-    """`sepa_sctinst.sct_inst.Transaction` object give information about the transaction. """
+    """:class:`sepa_sctinst.sct_inst.Transaction` object give information about the transaction. """
 
     def __init__(self,group_header:GroupHeader,originator:Participant,transaction:Transaction):
         """Initializes a SCTInst object
@@ -102,7 +102,7 @@ class SCTInst:
     def random():
         """Generate random SCTInst object
 
-        Returns `sepa_sctinst.sct_inst.SCTInst` object with random value
+        Returns :class:`sepa_sctinst.sct_inst_interbank.SCTInst` object with random value
         """
         fake = Faker()
         

@@ -54,7 +54,7 @@ class Message:
     @staticmethod
     def autodetect(data):
         """
-        Return the `sepa_sctinst.message.Message` object associated to the `data` parameter by matching with the xmlns attribute
+        Return the :class:`sepa_sctinst.message.Message` object associated to the `data` parameter by matching with the xmlns attribute
         """
         from sepa_sctinst.default_messages import DefaultMessages
         xmlns = None

@@ -1,7 +1,7 @@
 from sepa_sctinst.message import Message
 
 class DefaultMessages:
-    '''All `sepa_sctinst.message.Message` objects available on the SCTInst scheme (Interbank and C2B)
+    '''All :class:`sepa_sctinst.message.Message` objects available on the SCTInst scheme (Interbank and C2B)
     '''
     SCTINST_INTERBANK = Message('SCTInst',
                     'sepa_sctinst/xsd/pacs.008.001.02.xsd',

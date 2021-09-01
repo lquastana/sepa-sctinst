@@ -12,10 +12,11 @@ class SchemaValidation:
 
     """
     
-    def validate(self,data:str,message:Message):
+    @staticmethod
+    def validate(data:str,message:Message):
         """ XSD Validation for SCTInst messages
         where `data` is a XML message as string,
-        `message` is an `sepa_sctinst.message.Message` wich provide the schema to use for validation
+        `message` is an :class:`sepa_sctinst.message.Message` wich provide the schema to use for validation
         
         Return: A `dict` with isValid key and error_messages key if isValid = False
         """

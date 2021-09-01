@@ -76,7 +76,7 @@ class Transaction:
     """
     
     beneficiary:Participant
-    """Beneficiary informations as `sepa_sctinst.sct_inst_c2b.Participant`"""
+    """Beneficiary informations as :class:`sepa_sctinst.participant.Participant`"""
     amount:float
     """The amount of the SCT Inst in Euro """
     end_to_end_id:str
@@ -100,14 +100,14 @@ an accounts' receivable system."""
 class SCTInstC2B(Message):
     """A class to represent a SCTInst C2B message"""
     group_header:GroupHeader
-    """`sepa_sctinst.sct_inst_c2b.GroupHeader` object shared by all individual transactions included in the message. """
+    """:class:`sepa_sctinst.sct_inst_c2b.GroupHeader` object shared by all individual transactions included in the message. """
     originator:Participant
-    """Originator `sepa_sctinst.sct_inst_c2b.Participant` object that initiates the payment. """
+    """Originator :class:`sepa_sctinst.participant.Participant` object that initiates the payment. """
     payment_information:PaymentInformation
-    """`sepa_sctinst.sct_inst_c2b.PaymentInformation` object shared characteristics that applies to the debit side
+    """:class:`sepa_sctinst.sct_inst_c2b.PaymentInformation` object shared characteristics that applies to the debit side
 of the payment transactions. """
     transactions:list
-    """List of all `sepa_sctinst.sct_inst_c2b.Transaction`"""
+    """List of all :class:`sepa_sctinst.sct_inst_c2b.Transaction`"""
 
     def __init__(self,group_header:GroupHeader,
                  originator:Participant,
