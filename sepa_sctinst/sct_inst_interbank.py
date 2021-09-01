@@ -1,4 +1,4 @@
-from sepa_sctinst.sct_inst_common import Participant
+from sepa_sctinst.participant import Participant
 import xml.etree.ElementTree as ET
 from datetime import datetime,date
 import random
@@ -50,7 +50,7 @@ class Transaction:
     """
     
     beneficiary:Participant
-    """Beneficiary informations as `sepa_sctinst.sct_inst.Participant`"""
+    """Beneficiary informations as `sepa_sctinst.participant.Participant`"""
     amount:float
     """The amount of the SCT Inst in Euro """
     end_to_end_id:str
@@ -87,7 +87,7 @@ class SCTInst:
     group_header:GroupHeader
     """`sepa_sctinst.sct_inst.GroupHeader` object shared by all individual transactions included in the message. """
     originator:Participant
-    """Originator `sepa_sctinst.sct_inst.Participant` object that initiates the payment. """
+    """Originator `sepa_sctinst.participant.Participant` object that initiates the payment. """
     transaction:Transaction
     """`sepa_sctinst.sct_inst.Transaction` object give information about the transaction. """
 

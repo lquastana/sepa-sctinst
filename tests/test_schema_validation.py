@@ -1,9 +1,9 @@
 from sepa_sctinst.schema_validation import SchemaValidation
-from sepa_sctinst import Message, MessageConfiguration
+from sepa_sctinst.message import Message
 from faker import Faker
+from sepa_sctinst.default_messages import DefaultMessages
 
 import pytest
-from lxml import etree
 
 fake = Faker()
 
@@ -12,10 +12,10 @@ message_empty = 'Document is empty'
 
 @pytest.mark.parametrize(
     "filename,message_type,is_valid,error_msg_present,expected_message",[
-        ('tests/sct_inst_files/pacs008_valid.xml',Message.SCTINST, True, False,None), 
-        ('tests/sct_inst_files/pacs008_invalid.xml',Message.SCTINST, False, True,None), 
-        ('tests/sct_inst_files/pacs008_empty.xml',Message.SCTINST, False, True,message_empty),
-        ('tests/sct_inst_files/pain001_valid.xml',Message.SCTINST_C2B, True, False,None)
+        ('tests/sct_inst_files/pacs008_valid.xml', DefaultMessages.SCTINST_INTERBANK, True, False,None), 
+        ('tests/sct_inst_files/pacs008_invalid.xml', DefaultMessages.SCTINST_INTERBANK, False, True,None), 
+        ('tests/sct_inst_files/pacs008_empty.xml', DefaultMessages.SCTINST_INTERBANK, False, True,message_empty),
+        ('tests/sct_inst_files/pain001_valid.xml',DefaultMessages.SCTINST_C2B, True, False,None)
     ]
 )
 def test_schema_validation(filename,message_type,is_valid,error_msg_present,expected_message):
@@ -34,9 +34,9 @@ def test_schema_validation(filename,message_type,is_valid,error_msg_present,expe
         
 @pytest.mark.parametrize(
     "filename,expected_message" ,[
-        ('tests/sct_inst_files/pacs008_valid.xml',Message.SCTINST),
-        ('tests/sct_inst_files/pacs008_invalid.xml',Message.SCTINST), 
-        ('tests/sct_inst_files/pain001_valid.xml',Message.SCTINST_C2B),
+        ('tests/sct_inst_files/pacs008_valid.xml',DefaultMessages.SCTINST_INTERBANK),
+        ('tests/sct_inst_files/pacs008_invalid.xml',DefaultMessages.SCTINST_INTERBANK), 
+        ('tests/sct_inst_files/pain001_valid.xml',DefaultMessages.SCTINST_C2B),
         ('tests/sct_inst_files/pain001_invalid_xmlns.xml',None)
     ]
 )
@@ -45,7 +45,7 @@ def test_autodetect_xsd(filename,expected_message):
     with open(filename, 'r') as input:
         data = input.read()
     message_type = None
-    message_type = MessageConfiguration.autodetect(data)
+    message_type = Message.autodetect(data)
         
     assert message_type == expected_message
         

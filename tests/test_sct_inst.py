@@ -1,9 +1,10 @@
 from datetime import date,datetime
 from sepa_sctinst.schema_validation import SchemaValidation
 from sepa_sctinst.sct_inst_interbank import SCTInst,GroupHeader,Transaction
-from sepa_sctinst.sct_inst_common import Participant
-from sepa_sctinst import Message
+from sepa_sctinst.participant import Participant
+from sepa_sctinst.message import Message
 from faker import Faker
+from sepa_sctinst.default_messages import DefaultMessages
 
 fake = Faker()
 
@@ -30,7 +31,7 @@ def test_pacs008_to_xml():
     sct_message = init_default_message()
     
     xml_message = sct_message.to_xml()
-    response = schema_validation.validate(xml_message,Message.SCTINST)
+    response = schema_validation.validate(xml_message,DefaultMessages.SCTINST_INTERBANK)
 
     assert response['isValid'] == True
 
@@ -38,6 +39,6 @@ def test_pacs008_to_xml():
     
 def test_sct_inst_random():
     random_message = SCTInst.random()
-    response = schema_validation.validate(random_message.to_xml(),Message.SCTINST)
+    response = schema_validation.validate(random_message.to_xml(),DefaultMessages.SCTINST_INTERBANK)
     assert response['isValid'] == True
     

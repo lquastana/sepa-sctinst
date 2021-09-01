@@ -1,9 +1,9 @@
 from datetime import date,datetime
 from sepa_sctinst.schema_validation import SchemaValidation
 from sepa_sctinst.sct_inst_c2b import SCTInstC2B,GroupHeader,Transaction,PaymentInformation
-from sepa_sctinst.sct_inst_common import Participant
-from sepa_sctinst import Message
+from sepa_sctinst.participant import Participant
 from faker import Faker
+from sepa_sctinst.default_messages import DefaultMessages
 import pytest
 
 fake = Faker()
@@ -35,7 +35,7 @@ def test_sct_inst_c2b_to_xml():
     sct_message = init_default_message()
     
     xml_message = sct_message.to_xml()
-    response = schema_validation.validate(xml_message,Message.SCTINST_C2B)
+    response = schema_validation.validate(xml_message,DefaultMessages.SCTINST_C2B)
 
     assert response['isValid'] == True
     
@@ -50,7 +50,7 @@ def test_sct_inst_c2b_no_transaction():
     
 def test_sct_inst_c2b_random():
     random_message = SCTInstC2B.random(4)
-    response = schema_validation.validate(random_message.to_xml(),Message.SCTINST_C2B)
+    response = schema_validation.validate(random_message.to_xml(),DefaultMessages.SCTINST_C2B)
     assert response['isValid'] == True
     
 def test_sct_inst_to_interbank():
@@ -58,7 +58,7 @@ def test_sct_inst_to_interbank():
     interbanks = random_message.to_interbank('CLRG')
     
     for message in interbanks:
-        response = schema_validation.validate(message.to_xml(),Message.SCTINST)
+        response = schema_validation.validate(message.to_xml(),DefaultMessages.SCTINST_INTERBANK)
         assert response['isValid'] == True
     assert len(interbanks) == 4
     

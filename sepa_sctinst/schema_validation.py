@@ -1,5 +1,5 @@
 
-from sepa_sctinst import MessageConfiguration
+from sepa_sctinst.message import Message
 import lxml
 from lxml import etree
 import io
@@ -12,15 +12,15 @@ class SchemaValidation:
 
     """
     
-    def validate(self,data:str,payment_conf:MessageConfiguration):
+    def validate(self,data:str,message:Message):
         """ XSD Validation for SCTInst messages
         where `data` is a XML message as string,
-        `payment_conf` is an `sepa_sctinst.MessageConfiguration` wich provide the schema to use for validation
+        `message` is an `sepa_sctinst.message.Message` wich provide the schema to use for validation
         
         Return: A `dict` with isValid key and error_messages key if isValid = False
         """
 
-        with open(payment_conf.xsd_filepath) as f:
+        with open(message.xsd_filepath) as f:
             schema_root = f.read()
         
         schema_doc = etree.parse(io.BytesIO(schema_root.encode('utf-8')))
